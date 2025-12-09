@@ -1,0 +1,80 @@
+document.addEventListener('DOMContentLoaded',function() {
+
+//gauge ram
+// Options de la jauge
+var options = {
+    angle: 0.15,
+    lineWidth: 0.44,
+    radiusScale: 1,
+    pointer: {
+        length: 0.6,
+        strokeWidth: 0.035,
+        color: '#000000'
+    },
+    staticLabels: {
+        font: "12px sans-serif",
+        labels: [0, 20, 40, 60, 80, 100],
+        fractionDigits: 0,
+        color:'#fbfefe'
+    },
+    staticZones: [
+        {strokeStyle: "#30B32D", min: 0, max: 50},
+        {strokeStyle: "#FFDD00", min: 50, max: 80},
+        {strokeStyle: "#F03E3E", min: 80, max: 100}
+    ],
+    highDpiSupport: true
+};
+
+// Initialisation de la jauge
+var target = document.getElementById('gauge_ram');
+var gauge = new Gauge(target).setOptions(options);
+
+
+// Configuration des limites
+gauge.maxValue = 100;
+gauge.setMinValue(0);
+
+// Valeur initiale
+gauge.set(80);
+
+
+
+//gauge cpu
+var opts = {
+  angle: 0.35, // The span of the gauge arc
+  lineWidth: 0.1, // The line thickness
+  radiusScale: 1, // Relative radius
+  pointer: {
+    length: 0.6, // Relative to gauge radius
+    strokeWidth: 0.035, // The thickness
+    color: '#000000' // Fill color
+    
+  },
+  limitMax: false,     // If false, max value increases automatically if value > maxValue
+  limitMin: false,     // If true, the min value of the gauge will be fixed
+  colorStart: '#6F6EA0',   // Colors
+  colorStop: '#2a2d41',    // just experiment with them
+  strokeColor: '#EEEEEE',  // to see which ones work best for you
+  generateGradient: true,
+  highDpiSupport: true,     // High resolution support
+  
+};
+
+var target = document.getElementById('gauge_percent'); // your canvas element
+var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
+
+gauge.maxValue = 100; // set max gauge value
+gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+gauge.animationSpeed = 32; // set animation speed (32 is default value)
+gauge.set(50); // set actual value
+
+//timestamp
+function updateTime() { //create fonction
+const now = new Date().toLocaleString("fr-FR"); //create date with local setting and put it in const 'now'
+document.getElementById("timestamp").textContent = "Mise à jour : " + now; // get element with id="timestamp" and put text inside
+}
+
+updateTime(); //update instant when page load, else it wait 1 sec
+
+setInterval(updateTime,1000); //update every 1000ms =1 sec
+});

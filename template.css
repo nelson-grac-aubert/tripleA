@@ -1,0 +1,59 @@
+:root {
+    --main-color :#121421;
+    --div-color:#171c2a;
+    --text-color:#fbfefe;
+    --bonus-color:#2a2d41;
+}
+*{
+    padding: 0;
+    margin: 0;
+}
+
+html,body{
+    background-color: var(--main-color);
+    color: var(--text-color);
+ 
+}
+
+header,footer,section{
+    background-color: var(--div-color);
+}
+header{
+    width: 100%;
+    height:50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+header>h1,p{
+    margin: 0 20px;
+}
+h2{
+    margin-bottom: 20px;
+}
+
+section{
+    border-radius: 15px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid var(--bonus-color);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1;
+}
+
+main{ display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
+
+footer{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 50px;
+}
+/*media query desktop TODO*/

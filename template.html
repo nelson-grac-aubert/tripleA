@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="template.css" rel="stylesheet" />
+    <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!--script gauge-->
+    <script src="script.js"></script> <!--script config gauge-->
+    <meta http-equiv="refresh" content="30">    <!--refresh every 30 sec-->
+    <meta id="page-timestamp" name="timestamp" content=""> <!--meta tag for timestamp -->
+    <title>TripleA</title>
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <p id="timestamp"></p>
+  </script>
+    </header>
+    <main>
+        <section id="system">
+            <h2>Systeme</h2>
+            <div>Nom de la machine : {{machine_name_placeholder}}</div>
+            <div>systeme d'exploitation : {{operating_system_placeholder}}</div>
+            <div>heure d'allumage : {{start_time_placeholder}}</div>
+            <div>uptime : {{up_time_placeholder}}</div>
+            <div>nombre d'utilisateur : {{user_count_placeholder}}</div>
+        </section>
+        <section id="cpu">
+            <h2>CPU</h2>
+            <div>Nombre de coeurs : {{cpu_heart_count_placeholder}}</div>
+            <div>fréquence : {{cpu_frequency_placeholder}}</div>
+            <div>pourcentage d'utilisation : {{cpu_usage_percent_placeholder}}</div>
+         <canvas id="gauge_percent" width="auto" height="100"></canvas>
+        </section>
+        <section id="memory">
+            <h2>Mémoire</h2>
+            <div>RAM total : {{total_ram_bytes_placeholder}}bytes et {{total_ram_gb_placeholder}}GB</div>
+            <div>RAM utilisée : {{used_ram_bytes_placeholder}}GB</div>
+            <div>Pourcentage : {{used_ram_percent_placeholder}}
+            <canvas id="gauge_ram" width="auto" height="100"></canvas><!--canvas for gauge linked to script by id-->
+                </div>
+        </section>
+        <section id="network">
+            <h2>Réseau</h2>
+            <div>adresse principale : {{ip_address_placeholder}}</div>
+        </section>
+        <section id="process">
+            <h2>Processus</h2>
+            <div><li id="process_top3">Processus les plus gourmands
+                <ol>{{most_demanding_processus_1_placeholder}}</ol>
+                <ol>{{most_demanding_processus_2_placeholder}}</ol>
+                <ol>{{most_demanding_processus_3_placeholder}}</ol>
+            </li>
+            </div>
+            <div><li id="process_cpu">Processus en cours CPU
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                </li>
+            </div>
+            <div><li id="process_ram">Processus en cours RAM
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                </li>
+            </div>
+        </section>
+        <section id="files">
+            <h2>Fichier</h2> <!--TODO check if id is useful-->
+            <div>{{analysed_directory_placeholder}}</div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>
+            <a href="/pdf" target="_blank">
+            <button>Télécharger le Dashboard en PDF</button>
+            </a>
+        </p>
+
+    </footer><!--TODO avec informations de génération--> 
+</body>
+</html>
