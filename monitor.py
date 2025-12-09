@@ -1,11 +1,9 @@
-#!/usr/bin/env python3
 import psutil
 import platform
 import socket
 import os
 import time
 import getpass
-import json
 from psutil._common import bytes2human
 from datetime import datetime
 
@@ -17,6 +15,14 @@ def cpu_info():
     }
 
 def memory_info():
+    ram = psutil.virtual_memory()
+    return {
+        "used_gb": ram.used / (1024**3),
+        "total_gb": ram.total / (1024**3),
+        "usage_percent": ram.percent
+    }
+
+def storage_info():
     mem = psutil.disk_usage(path="/")
     return {
         "used_gb": mem.used / (1024**3),
@@ -70,55 +76,56 @@ def file_analysis(path):
         "percentages": percentages
     }
 
-if __name__ == "__main__":
+def set_variables() : 
     # Collecte des infos
     cpu = cpu_info()
-    mem = memory_info()
+    ram = memory_info()
     sysinfo = system_info()
     proc = process_info()
     files = file_analysis("/home/" + getpass.getuser() + "/Documents")
 
-    # Affichage texte brut
+    # Assignation variables et print pour vérifications
+    cpu_hearts = cpu['cores']
+    cpu_frequency = cpu['frequency_mhz']
+    cpu_usage_percent = cpu['usage_percent']
     print("=== CPU ===")
-    print(f"Cœurs : {cpu['cores']}")
-    print(f"Fréquence : {cpu['frequency_mhz']:.2f} MHz")
-    print(f"Utilisation : {cpu['usage_percent']} %")
+    print(f"Cœurs : {cpu_hearts}")
+    print(f"Fréquence : {cpu_frequency:.2f} MHz")
+    print(f"Utilisation : {cpu_usage_percent} %")
 
-    print("\n=== Mémoire ===")
-    print(f"Utilisée : {mem['used_gb']:.2f} GB")
-    print(f"Totale : {mem['total_gb']:.2f} GB")
-    print(f"Pourcentage : {mem['usage_percent']} %")
+    used_ram_gb = ram['used_gb']
+    total_ram_gb = ram['total_gb']
+    used_ram_percent = ram['usage_percent']
+    print("\n=== RAM ===")
+    print(f"Utilisée : {used_ram_gb:.2f} GB")
+    print(f"Totale : {total_ram_gb:.2f} GB")
+    print(f"Pourcentage : {used_ram_percent} %")
 
+    machine_name = sysinfo['hostname']
+    os_version = sysinfo['os']
+    start_time = sysinfo['boot_time']
+    up_time = sysinfo['uptime']
+    user_count = sysinfo['users_connected']
+    ip_address = sysinfo['ip_address']
     print("\n=== Système ===")
-    for k, v in sysinfo.items():
-        print(f"{k} : {v}")
+    print(f"Nom d’hôte : {machine_name}")
+    print(f"OS : {os_version}")
+    print(f"Démarrage : {start_time}")
+    print(f"Uptime : {up_time}")
+    print(f"Utilisateurs connectés : {user_count}")
+    print(f"Adresse IP : {ip_address}")
 
+    top3 = proc["top3"]
     print("\n=== Processus (Top 3 gourmands) ===")
-    for p in proc["top3"]:
-        print(f"{p['name']} (PID {p['pid']}) - CPU {p['cpu_percent']} %, RAM {p['memory_percent']:.2f} %")
+    for p in top3:
+        pid = p['pid']
+        name = p['name']
+        cpu_p = p['cpu_percent']
+        ram_p = p['memory_percent']
+        print(f"{name} (PID {pid}) - CPU {cpu_p} %, RAM {ram_p:.2f} %")
 
     print("\n=== Analyse fichiers ===")
     for ext, count in files["counts"].items():
         print(f"{ext} : {count} fichiers ({files['percentages'][ext]:.2f} %)")
 
-    # Sortie JSON
-    data = {
-        "cpu": cpu,
-        "memory": mem,
-        "system": sysinfo,
-        "processes": proc,
-        "files": files
-    }
-
-    print("\n=== Sortie JSON ===")
-    print(json.dumps(data, indent=4))
-    
-
-
-    print('MEMORY\n------')
-    print(psutil.virtual_memory())
-    print('\nSWAP\n----')
-    print(psutil.swap_memory())
-    print(psutil.disk_partitions())
-    print(psutil.disk_usage(path="/"))
-
+set_variables()
