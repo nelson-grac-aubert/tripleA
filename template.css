@@ -47,10 +47,17 @@ main{ display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
+#process_top3{
+    margin-bottom: 50px;
+}
 
-div#table{
+div#table_process{
     overflow-y: scroll;
     height: 200px;
+}
+
+th{
+    border: 1px solid var(--text-color)
 }
 
 #button{
