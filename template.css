@@ -48,8 +48,18 @@ main{ display: flex;
     flex-wrap: wrap;
 }
 
+div#table{
+    overflow-y: scroll;
+    height: 200px;
+}
 
-
+#button{
+    color: var(--text-color);
+    background-color: var(--bonus-color);
+    border: 1px solid var;
+    border-radius: 5%;
+    padding: 5px;
+}
 footer{
     margin: 0;
     padding: 0;
@@ -57,3 +67,4 @@ footer{
     height: 50px;
 }
 /*media query desktop TODO*/
+

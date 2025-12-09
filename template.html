@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="widtd=device-widtd, initial-scale=1.0">
     <link href="template.css" rel="stylesheet" />
-    <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!--script gauge-->
-    <script src="script.js"></script> <!--script config gauge-->
+    <script src="https://bernii.gitdub.io/gauge.js/dist/gauge.min.js"></script> <!--script gauge-->
+    <script src="./script.js"></script> <!--script config gauge-->
     <meta http-equiv="refresh" content="30">    <!--refresh every 30 sec-->
     <meta id="page-timestamp" name="timestamp" content=""> <!--meta tag for timestamp -->
     <title>TripleA</title>
@@ -14,7 +14,6 @@
     <header>
         <h1>Dashboard</h1>
         <p id="timestamp"></p>
-  </script>
     </header>
     <main>
         <section id="system">
@@ -30,15 +29,15 @@
             <div>Nombre de coeurs : {{cpu_heart_count_placeholder}}</div>
             <div>fréquence : {{cpu_frequency_placeholder}}</div>
             <div>pourcentage d'utilisation : {{cpu_usage_percent_placeholder}}</div>
-         <canvas id="gauge_percent" width="auto" height="100"></canvas>
+            <canvas id="gauge_percent" widtd="auto" height="100"></canvas>
         </section>
         <section id="memory">
             <h2>Mémoire</h2>
             <div>RAM total : {{total_ram_bytes_placeholder}}bytes et {{total_ram_gb_placeholder}}GB</div>
             <div>RAM utilisée : {{used_ram_bytes_placeholder}}GB</div>
             <div>Pourcentage : {{used_ram_percent_placeholder}}
-            <canvas id="gauge_ram" width="auto" height="100"></canvas><!--canvas for gauge linked to script by id-->
-                </div>
+            <canvas id="gauge_ram" widtd="auto" height="100"></canvas><!--canvas for gauge linked to script by id-->
+            </div>
         </section>
         <section id="network">
             <h2>Réseau</h2>
@@ -52,7 +51,77 @@
                 <ol>{{most_demanding_processus_3_placeholder}}</ol>
             </li>
             </div>
-            <div><li id="process_cpu">Processus en cours CPU
+
+            <div id="table">
+                <table>
+                    <tr>
+                        <th>Processus</th>
+                        <th>CPU</th>
+                        <th>RAM</th>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>nom_du_Processus</td>
+                        <td>{{running_processus_cpu_usage_placeholder}}</td>
+                        <td>{{running_processus_ram_usage_placeholder}}</td>
+                    </tr>
+                </table>
+            </div>
+       <!--     <div><li id="process_cpu">Processus en cours CPU
                 <ul> {{running_processus_cpu_usage_placeholder}}</ul>
                 <ul> {{running_processus_cpu_usage_placeholder}}</ul>
                 <ul> {{running_processus_cpu_usage_placeholder}}</ul>
@@ -65,7 +134,7 @@
                 <ul> {{running_processus_ram_usage_placeholder}}</ul>
                 <ul> {{running_processus_ram_usage_placeholder}}</ul>
                 </li>
-            </div>
+            </div>-->
         </section>
         <section id="files">
             <h2>Fichier</h2> <!--TODO check if id is useful-->
@@ -76,7 +145,7 @@
     <footer>
         <p>
             <a href="/pdf" target="_blank">
-            <button>Télécharger le Dashboard en PDF</button>
+            <button id="button">Télécharger le Dashboard en PDF</button>
             </a>
         </p>
 
