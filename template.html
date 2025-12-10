@@ -5,7 +5,7 @@
     <meta name="viewport" content="widtd=device-widtd, initial-scale=1.0">
     <link href="template.css" rel="stylesheet" />
     <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!--script gauge-->
-    <script src="./script.js"></script> <!--script config gauge-->
+    <script src="./script.js"></script> <!--script js perso -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script> <!--TODO remove on github-->
     <meta http-equiv="refresh" content="30">    <!--refresh every 30 sec-->
     <meta id="page-timestamp" name="timestamp" content=""> <!--meta tag for timestamp -->
@@ -35,11 +35,11 @@
         </section>
         <section id="memory">
             <h2>Mémoire</h2>
-            <div>RAM total : {{total_ram_bytes_placeholder}}bytes et {{total_ram_gb_placeholder}}GB</div>
-            <div>RAM utilisée : {{used_ram_bytes_placeholder}}GB</div>
+            <div>RAM total :{{total_ram_gb_placeholder}}GB</div>
+            <div>RAM utilisée : {{used_ram_gb_placeholder}}GB</div>
             <div>Pourcentage : {{used_ram_percent_placeholder}} %
             <canvas id="gauge_ram" widtd="auto" height="100"></canvas><!--canvas for gauge linked to script by id-->
-            <canvas id="myChart" style="width:100%;max-width:700px"></canvas> <!--TODO remove on github-->
+            <canvas id="myChart" style="width:100%;max-width:200px"></canvas> <!--TODO remove on github-->
         </div>
         </section>
         <section id="network">
@@ -124,5 +124,42 @@
         </p>
 
     </footer><!--TODO avec informations de génération--> 
+
+    <!--script-->
+    <script>
+const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+const yValues = [55, 49, 44, 24, 15];
+const barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145"
+];
+
+const ctx = document.getElementById('myChart');
+
+new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {display:true},
+      title: {
+        display: true,
+        text: "World Wine Production 2018",
+        font: {size:16}
+      }
+    }
+  }
+});
+</script>
+
 </body>
 </html>
