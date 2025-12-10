@@ -169,16 +169,16 @@ def generate_dashboard(variables, template_path="template.html", output_path="in
     html = html.replace("{{cpu_heart_count_placeholder}}", str(variables["cpu_hearts"]))
     html = html.replace("{{cpu_frequency_placeholder}}", f"{variables['cpu_frequency']:.2f}")
     html = html.replace("{{cpu_usage_percent_placeholder}}", f"{variables['cpu_usage_percent']}")
-    html = html.replace("{{load_1_placeholder}}", f"{variables["load1"]} %")
-    html = html.replace("{{load_5_placeholder}}", f"{variables["load5"]} %")
-    html = html.replace("{{load_15_placeholder}}", f"{variables["load15"]} %")
+    html = html.replace("{{load_1_placeholder}}", f"{variables["load1"]:.2f} %")
+    html = html.replace("{{load_5_placeholder}}", f"{variables["load5"]:.2f} %")
+    html = html.replace("{{load_15_placeholder}}", f"{variables["load15"]:.2f} %")
 # Remplacements Mémoire
     html = html.replace("{{total_ram_gb_placeholder}}", f" {variables['total_ram_gb']:.2f} ")
     html = html.replace("{{used_ram_gb_placeholder}}", f"{variables['used_ram_gb']:.2f} ")
     html = html.replace("{{used_ram_percent_placeholder}}", f"{variables['used_ram_percent']}")
-    html = html.replace("{{total_storage_gb}}", f"{variables['total_storage_gb']:.2f} GB")
-    html = html.replace("{{used_storage_gb}}", f"{variables['used_storage_gb']:.2f} GB")
-    html = html.replace("{{used_storage_percent}}", f"{variables['used_storage_percent']} %")
+    html = html.replace("{{total_storage_gb}}", f"{variables['total_storage_gb']:.2f} ")
+    html = html.replace("{{used_storage_gb}}", f"{variables['used_storage_gb']:.2f} ")
+    html = html.replace("{{used_storage_percent}}", f"{variables['used_storage_percent']} ")
 
 # Remplacements Top 3
     html = html.replace("{{processus1_ram_usage_placeholder}}",
@@ -250,9 +250,9 @@ def print_variables(variables):
 
 # Main
 
-if __name__ == "__main__" :
+while __name__ == "__main__" :
     variables = set_variables()
     print_variables(variables)
     generate_dashboard(variables)
 
-    get_load_average()  
+    time.sleep(30)
