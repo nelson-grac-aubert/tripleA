@@ -26,13 +26,19 @@
                 <div>nombre d'utilisateur : {{user_count_placeholder}}</div>
             </div>
         </section>
+                <section id="network">
+            <h2>Réseau</h2>
+            <div class="card">
+                <div>adresse principale : {{ip_address_placeholder}}</div>
+            </div>
+            </section>
         <section id="cpu">
             <h2>CPU</h2>
             <div class="card">
                 <div>Nombre de coeurs : {{cpu_heart_count_placeholder}}</div>
                 <div>fréquence : {{cpu_frequency_placeholder}} MHz</div>
                 <div>pourcentage d'utilisation : {{cpu_usage_percent_placeholder}} %</div>
-                <canvas id="gauge_percent" widtd="auto" height="100"></canvas>
+               <!-- chart pie <canvas id="gauge_percent" widtd="auto" height="100"></canvas>--> 
             </div>
         </section>
         <section id="memory">
@@ -42,7 +48,7 @@
                 <div>RAM utilisée : {{used_ram_gb_placeholder}}GB</div>
                 <div>Pourcentage : {{used_ram_percent_placeholder}} % </div>
                 <!--<canvas id="gauge_ram" widtd="auto" height="100"></canvas>--><!--TODO DELETE canvas for gauge linked to script by id-->
-                <canvas id="myChart" style="width:200px;max-width:200px"></canvas> 
+                
             </div>
             <div class="card">    
                 <div>Mémoire totale : {{total_storage_gb}}</div>
@@ -50,10 +56,7 @@
                 <div>Mémoire utilisée (%) : {{used_storage_percent}}</div>
             </div>
         </section>
-        <section id="network">
-            <h2>Réseau</h2>
-            <div class="card">adresse principale : {{ip_address_placeholder}}</div>
-        </section>
+
         <section id="process">
             <h2>Processus</h2>
 
@@ -71,7 +74,7 @@
                     <ol>{{processus2_cpu_usage_bytes_placeholder}}</ol>
                     <ol>{{processus3_cpu_usage_bytes_placeholder}}</ol>
                    </li>
-            
+            <!-- bar chart
                      <canvas id="bar_chart"></canvas>
                      <script>
                     const ctx = document.getElementById('bar_chart');
@@ -95,7 +98,7 @@
                         }
                     });
                     </script>
-
+            -->
                    <!-- <tr>
                         <th>Processus</th>
                         <th>CPU %</th>
@@ -155,8 +158,9 @@
                     <td>{{percent_jpg_placholder}}</td>
                 </tr>
             </table>
-
+            
             </div>
+            <canvas id="pie_chart" width="auto"></canvas>
         </section>
     </main>
 
@@ -166,6 +170,7 @@
             <button id="button">Télécharger le Dashboard en PDF</button>
             </a>
         </p>
+        
        
         <p id="timestamp"></p>
         <script>   //timestamp
@@ -178,8 +183,8 @@
     </footer><!--TODO avec informations de génération--> 
 
         <script>
-        const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-        const yValues = [55, 49, 44, 24, 15];  
+        const xValues = [".txt", ".py", ".pdf", ".jpg"];
+        const yValues = [{{percent_txt_placholder}},{{percent_py_placholder}},{{percent_pdf_placholder}},{{percent_jpg_placholder}}];  
         const barColors = [
         "#b91d47",
         "#00aba9",
@@ -188,7 +193,7 @@
         "#1e7145"
         ];
 
-        const ctx = document.getElementById('myChart');
+        const ctx = document.getElementById('pie_chart');
 
         new Chart(ctx, {
         type: "pie",
