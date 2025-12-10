@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="template.css" rel="stylesheet" />
+    <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!--script gauge-->
+    <script src="script.js"></script> <!--script config gauge-->
+    <meta http-equiv="refresh" content="30">    <!--refresh every 30 sec-->
+    <meta id="page-timestamp" name="timestamp" content=""> <!--meta tag for timestamp -->
+    <title>TripleA</title>
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <p id="timestamp"></p>
+  </script>
+    </header>
+    <main>
+        <section id="system">
+            <h2>Systeme</h2>
+            <div>Nom de la machine : nelson-VMware-Virtual-Platform</div>
+            <div>systeme d'exploitation : Linux 6.14.0-36-generic</div>
+            <div>heure d'allumage : 2025-12-10 08:17:36</div>
+            <div>uptime : 00:02:48</div>
+            <div>nombre d'utilisateur : 2</div>
+        </section>
+        <section id="cpu">
+            <h2>CPU</h2>
+            <div>Nombre de coeurs : 2</div>
+            <div>fréquence : 2611.20 MHz</div>
+            <div>pourcentage d'utilisation : 22.7 %</div>
+         <canvas id="gauge_percent" width="auto" height="100"></canvas>
+        </section>
+        <section id="memory">
+            <h2>Mémoire</h2>
+            <div>RAM total : 4055478272bytes et 3.78GB</div>
+            <div>RAM utilisée : 2382569472GB</div>
+            <div>Pourcentage : 67.2 %
+            <canvas id="gauge_ram" width="auto" height="100"></canvas><!--canvas for gauge linked to script by id-->
+                </div>
+        </section>
+        <section id="network">
+            <h2>Réseau</h2>
+            <div>adresse principale : 192.168.8.139</div>
+        </section>
+        <section id="process">
+            <h2>Processus</h2>
+            <div><li id="process_top3">Processus les plus gourmands
+                <ol>code (PID 3332) - CPU 2.9 %</ol>
+                <ol>code (PID 3372) - CPU 2.9 %</ol>
+                <ol>python3 (PID 5161) - CPU 2.9 %</ol>
+            </li>
+            </div>
+            <div><li id="process_cpu">Processus en cours CPU
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                </li>
+            </div>
+            <div><li id="process_ram">Processus en cours RAM
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                </li>
+            </div>
+        </section>
+        <section id="files">
+            <h2>Fichier</h2> <!--TODO check if id is useful-->
+            <div>/home/nelson/Documents</div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>
+            <a href="/pdf" target="_blank">
+            <button>Télécharger le Dashboard en PDF</button>
+            </a>
+        </p>
+
+    </footer><!--TODO avec informations de génération--> 
+</body>
+</html>
