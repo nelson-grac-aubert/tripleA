@@ -169,15 +169,19 @@ def generate_dashboard(variables, template_path="template.html", output_path="in
     html = html.replace("{{used_storage_gb}}", f"{variables['used_storage_gb']:.2f} GB")
     html = html.replace("{{used_storage_percent}}", f"{variables['used_storage_percent']} %")
 
-# Top 3 CPU
-    for i in range(3):
-        proc = variables['top3_cpu'][i]
-        html = html.replace(f"{{{{most_demanding_processus_{i+1}_placeholder}}}}",
-                            f"{proc['name']} (PID {proc['pid']})")
-        html = html.replace(f"{{{{processus{i+1}_cpu_usage_percent_placeholder}}}}",
-                            f"{proc['cpu_percent']}")
-        html = html.replace(f"{{{{processus{i+1}_ram_usage_bytes_placeholder}}}}",
-                            f"{proc['memory_percent']:.2f}")
+# Top 3
+    html = html.replace("{{processus1_ram_usage_placeholder}}",
+    f"{variables['top3_ram'][0]['name']} (PID {variables['top3_ram'][0]['pid']}) - RAM {variables['top3_ram'][0]['memory_percent']:.2f} %")
+    html = html.replace("{{processus2_ram_usage_placeholder}}",
+    f"{variables['top3_ram'][1]['name']} (PID {variables['top3_ram'][1]['pid']}) - RAM {variables['top3_ram'][1]['memory_percent']:.2f} %")
+    html = html.replace("{{processus3_ram_usage_placeholder}}",
+    f"{variables['top3_ram'][2]['name']} (PID {variables['top3_ram'][2]['pid']}) - RAM {variables['top3_ram'][2]['memory_percent']:.2f} %")
+    html = html.replace("{{processus1_cpu_usage_placeholder}}",
+    f"{variables['top3_cpu'][0]['name']} (PID {variables['top3_cpu'][0]['pid']}) - CPU {variables['top3_cpu'][0]['cpu_percent']:.2f} %")
+    html = html.replace("{{processus2_cpu_usage_placeholder}}",
+f"{variables['top3_cpu'][1]['name']} (PID {variables['top3_cpu'][1]['pid']}) - CPU {variables['top3_cpu'][1]['cpu_percent']:.2f} %")
+    html = html.replace("{{processus3_cpu_usage_placeholder}}",
+    f"{variables['top3_cpu'][2]['name']} (PID {variables['top3_cpu'][2]['pid']}) - CPU {variables['top3_cpu'][2]['cpu_percent']:.2f} %")
 
 # Fichiers
     html = html.replace("{{number_txt_placholder}}", str(variables["file_counts"][".txt"]))
