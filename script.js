@@ -68,6 +68,13 @@ gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
 gauge.animationSpeed = 32; // set animation speed (32 is default value)
 gauge.set(50); // set actual value
 
+//chart pie
+
+
+
+
+
+
 //timestamp
 function updateTime() { //create fonction
 const now = new Date().toLocaleString("fr-FR"); //create date with local setting and put it in const 'now'

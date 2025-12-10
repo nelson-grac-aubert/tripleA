@@ -40,16 +40,35 @@ section{
     border: 1px solid var(--bonus-color);
     display: flex;
     flex-direction: column;
-    flex-shrink: 1;
+    height: fit-content;    
 }
 
 main{ display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
+/*#process_table_top3{
+    background-color: red;
+}
+*/
+#process_list{
+    overflow-y: scroll;
+    height: 150px;
+    width: 200px;
+    margin-bottom: 50px;
+}
 
+th{
+    border: 1px solid var(--text-color)
+}
 
-
+#button{
+    color: var(--text-color);
+    background-color: var(--bonus-color);
+    border: 1px solid var;
+    border-radius: 5%;
+    padding: 5px;
+}
 footer{
     margin: 0;
     padding: 0;
@@ -57,3 +76,4 @@ footer{
     height: 50px;
 }
 /*media query desktop TODO*/
+
