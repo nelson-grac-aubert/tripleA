@@ -42,6 +42,9 @@ h2{
     margin-bottom: 20px;
 }
 
+li{
+    list-style-type: none;
+}
 section{
     border-radius: 15px;
     margin: 20px;
@@ -106,9 +109,10 @@ footer{
     }
     #process,#files{
         max-width:100%;
-}
+    }
 #process_table_top3>div{
     display: flex;
     flex-direction: row;
-}
+    justify-content: space-evenly;
+    }
 }
