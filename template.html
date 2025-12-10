@@ -64,15 +64,15 @@
                 <h3>Processus les plus gourmands</h3>
                 <div class="card">
                    <li>RAM
-                    <ol>{{processus1_ram_usage_bytes_placeholder}}</ol>
-                    <ol>{{processus2_ram_usage_bytes_placeholder}}</ol>
-                    <ol>{{processus3_ram_usage_bytes_placeholder}}</ol>
+                    <ol>{{processus1_ram_usage_placeholder}}</ol>
+                    <ol>{{processus2_ram_usage_placeholder}}</ol>
+                    <ol>{{processus3_ram_usage_placeholder}}</ol>
                    </li>
 
                        <li>CPU
-                    <ol>{{processus1_cpu_usage_bytes_placeholder}}</ol>
-                    <ol>{{processus2_cpu_usage_bytes_placeholder}}</ol>
-                    <ol>{{processus3_cpu_usage_bytes_placeholder}}</ol>
+                    <ol>{{processus1_cpu_usage_placeholder}}</ol>
+                    <ol>{{processus2_cpu_usage_placeholder}}</ol>
+                    <ol>{{processus3_cpu_usage_placeholder}}</ol>
                    </li>
             <!-- bar chart
                      <canvas id="bar_chart"></canvas>
@@ -120,59 +120,58 @@
                         <td>{{processus3_ram_usage_bytes_placeholder}}</td>
                     </tr>-->
                 </div>
-                <h3>Liste des processus</h3>
-                <div id="process_list">
-                    {% for process in {{most_demanding_processus_placeholder}} %}
-                    <p>{{process}}</p>
-                        {% endfor %}
-                </div>
             </div>
         </section>
         <section id="files">
             <h2>Fichier</h2> <!--TODO check if id is useful-->
-            <div>Dossier analysé : {{analysed_directory_placeholder}}
-            <table class="card">
-                <tr>
-                    <th>type</th>
-                    <th>nombre</th>
-                    <th>%</th>
-                </tr>
-                <tr>
-                    <th>.txt</th>
-                    <td>{{number_txt_placholder}}</td>
-                    <td>{{percent_txt_placholder}}</td>
-                </tr>
+            <div>
+                <h3>Dossier analysé : {{analysed_directory_placeholder}}</h3>
+                <table class="card">
                     <tr>
-                    <th>.py</th>
-                    <td>{{number_py_placholder}}</td>
-                    <td>{{percent_py_placholder}}</td>
-                </tr>
+                        <th>type</th>
+                        <th>nombre</th>
+                        <th>%</th>
+                    </tr>
                     <tr>
-                    <th>.pdf</th>
-                    <td>{{number_pdf_placholder}}</td>
-                    <td>{{percent_pdf_placholder}}</td>
-                </tr>
-                    <tr>
-                    <th>.jpg</th>
-                    <td>{{number_jpg_placholder}}</td>
-                    <td>{{percent_jpg_placholder}}</td>
-                </tr>
-            </table>
-            
+                        <th>.txt</th>
+                        <td>{{number_txt_placholder}}</td>
+                        <td>{{percent_txt_placholder}}</td>
+                    </tr>
+                        <tr>
+                        <th>.py</th>
+                        <td>{{number_py_placholder}}</td>
+                        <td>{{percent_py_placholder}}</td>
+                    </tr>
+                        <tr>
+                        <th>.pdf</th>
+                        <td>{{number_pdf_placholder}}</td>
+                        <td>{{percent_pdf_placholder}}</td>
+                    </tr>
+                        <tr>
+                        <th>.jpg</th>
+                        <td>{{number_jpg_placholder}}</td>
+                        <td>{{percent_jpg_placholder}}</td>
+                    </tr>
+                </table>
             </div>
             <canvas id="pie_chart" width="auto"></canvas>
         </section>
     </main>
 
     <footer>
-         <p>
-            <a href="/pdf" target="_blank"><!--TODO working link-->
+        <!--
+Source - https://stackoverflow.com/a
+Posted by Batfan, modified by community. See post 'Timeline' for change history
+Retrieved 2025-12-10, License - CC BY-SA 4.0
+-->
+      <!--   <p>
+            <a href="/pdf" target="_blank"> remove uselessk
             <button id="button">Télécharger le Dashboard en PDF</button>
-            </a>
+        </a>
         </p>
-        
-       
+    -->
         <p id="timestamp"></p>
+        <p>Version 1.0</p>
         <script>   //timestamp
             const now = new Date();
             document.getElementById("timestamp").textContent =
@@ -186,11 +185,10 @@
         const xValues = [".txt", ".py", ".pdf", ".jpg"];
         const yValues = [{{percent_txt_placholder}},{{percent_py_placholder}},{{percent_pdf_placholder}},{{percent_jpg_placholder}}];  
         const barColors = [
-        "#b91d47",
-        "#00aba9",
-        "#2b5797",
-        "#e8c3b9",
-        "#1e7145"
+        "#E3E3E3",
+        "#456882",
+        "#234C6A",
+        "#1B3C53"
         ];
 
         const ctx = document.getElementById('pie_chart');

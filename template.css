@@ -25,7 +25,7 @@ header,footer,section{
 }
 header{
     width: 100%;
-    height:50px;
+    height:4rem;
     display: flex;
     justify-content:center;
     align-items: center;
@@ -34,10 +34,13 @@ header{
 header>h1,p{
     margin: 0 20px;
 }
+section>h2{
+    display: flex;
+    justify-content: center;
+}
 h2{
     margin-bottom: 20px;
 }
-
 
 section{
     border-radius: 15px;
@@ -46,7 +49,7 @@ section{
     border: 1px solid var(--bonus-color);
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 80%;
     
 }
 .card{
@@ -61,20 +64,11 @@ main{ display: flex;
     flex-wrap: wrap;
 }
 
-#sytem,#network,#process,#files{
-    
-}
-
-/*#process_table_top3{
-    background-color: red;
+/*
+#sytem,#network,#process,#files{  
 }
 */
-#process_list{
-    overflow-y: scroll;
-    height: 150px;
-    width: 200px;
-    margin-bottom: 50px;
-}
+
 
 th{
     border: 1px solid var(--text-color)
@@ -102,13 +96,13 @@ footer{
 @media (min-width: 900px) {
 
     main{
-
+        padding: 50px 0;
     }
 
     section{
-        max-width: 30%;
+        max-width: 40%;
     }
     #process,#files{
-        max-width: 70%;
+        width: 90%;
 }
 }
