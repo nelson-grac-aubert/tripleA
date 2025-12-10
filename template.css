@@ -50,8 +50,8 @@ section{
     display: flex;
     flex-direction: column;
     width: 80%;
-    
-}
+    box-shadow: rgba(240, 46, 170, 0.1) -5px 5px, rgba(240, 46, 170, 0.05) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+    }
 .card{
     background-color: var(--bonus-color);
     padding: 20px;
@@ -64,16 +64,19 @@ main{ display: flex;
     flex-wrap: wrap;
 }
 
+
+
 /*
 #sytem,#network,#process,#files{  
 }
 */
 
 
-th{
-    border: 1px solid var(--text-color)
+th,tr,td{
+    border: 1px solid var(--text-color);
+    padding: 5px;
 }
-
+/*button not used*/
 #button{
     color: var(--text-color);
     background-color: var(--bonus-color);
@@ -98,11 +101,14 @@ footer{
     main{
         padding: 50px 0;
     }
-
     section{
-        max-width: 40%;
+        max-width: 37%;
     }
     #process,#files{
-        width: 90%;
+        max-width:100%;
+}
+#process_table_top3>div{
+    display: flex;
+    flex-direction: row;
 }
 }
