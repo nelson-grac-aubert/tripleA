@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="widtd=device-widtd, initial-scale=1.0">
     <link href="template.css" rel="stylesheet" />
     <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!--script gauge-->
-    <script src="script.js"></script> <!--script config gauge-->
+    <script src="./script.js"></script> <!--script js perso -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script> <!--TODO remove on github-->
     <meta http-equiv="refresh" content="30">    <!--refresh every 30 sec-->
     <meta id="page-timestamp" name="timestamp" content=""> <!--meta tag for timestamp -->
     <title>TripleA</title>
@@ -13,32 +14,33 @@
 <body>
     <header>
         <h1>Dashboard</h1>
-        <p id="timestamp"></p>
-  </script>
+        <p id="timestamp"></p><!--change to real timestamp-->
     </header>
     <main>
         <section id="system">
+            <p>date test : 2025-12-10 11:35:10</p> <!--TODO remove l8er-->
             <h2>Systeme</h2>
             <div>Nom de la machine : nelson-VMware-Virtual-Platform</div>
             <div>systeme d'exploitation : Linux 6.14.0-36-generic</div>
-            <div>heure d'allumage : 2025-12-10 08:44:19</div>
-            <div>uptime : 00:25:52</div>
+            <div>heure d'allumage : 2025-12-10 09:40:44</div>
+            <div>uptime : 01:54:25</div>
             <div>nombre d'utilisateur : 2</div>
         </section>
         <section id="cpu">
             <h2>CPU</h2>
             <div>Nombre de coeurs : 2</div>
             <div>fréquence : 2611.20 MHz</div>
-            <div>pourcentage d'utilisation : 33.5 %</div>
-         <canvas id="gauge_percent" width="auto" height="100"></canvas>
+            <div>pourcentage d'utilisation : 49.0 %</div>
+            <canvas id="gauge_percent" widtd="auto" height="100"></canvas>
         </section>
         <section id="memory">
             <h2>Mémoire</h2>
-            <div>RAM total : 3.78GB</div>
-            <div>RAM utilisée : 2.41GB</div>
-            <div>Pourcentage : 71.1 %
-            <canvas id="gauge_ram" width="auto" height="100"></canvas><!--canvas for gauge linked to script by id-->
-                </div>
+            <div>RAM total :3.78GB</div>
+            <div>RAM utilisée : 1.97GB</div>
+            <div>Pourcentage : 60.2 %
+            <canvas id="gauge_ram" widtd="auto" height="100"></canvas><!--canvas for gauge linked to script by id-->
+            <canvas id="myChart" style="width:100%;max-width:200px"></canvas> <!--TODO remove on github-->
+        </div>
         </section>
         <section id="network">
             <h2>Réseau</h2>
@@ -46,40 +48,118 @@
         </section>
         <section id="process">
             <h2>Processus</h2>
-            <div><li id="process_top3">Processus les plus gourmands
-                <ol>code (PID 8426) - CPU 7.8 %</ol>
-                <ol>gnome-shell (PID 2428) - CPU 5.8 %</ol>
-                <ol>code (PID 10255) - CPU 3.9 %</ol>
-            </li>
+            <h3>Liste des processus</h3>
+            <div id="process_list">
+                  {% for process in {{most_demanding_processus_placeholder}} %}
+                 <p>{{process}}</p>
+                    {% endfor %}
             </div>
-            <div><li id="process_cpu">Processus en cours CPU
-                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
-                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
-                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
-                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
-                </li>
-            </div>
-            <div><li id="process_ram">Processus en cours RAM
-                <ul> {{running_processus_ram_usage_placeholder}}</ul>
-                <ul> {{running_processus_ram_usage_placeholder}}</ul>
-                <ul> {{running_processus_ram_usage_placeholder}}</ul>
-                <ul> {{running_processus_ram_usage_placeholder}}</ul>
-                </li>
+
+            <div id="process_table_top3">
+                <h3>Processus les plus gourmands</h3>
+                <table>
+                    <tr>
+                        <th>Processus</th>
+                        <th>CPU %</th>
+                        <th>RAM %</th>
+                    </tr>
+                    <tr>
+                        <td>gnome-shell (PID 2428)</td>
+                        <td>8.8</td>
+                        <td>3.98</td>
+                    </tr>
+                    <tr>
+                        <td>code (PID 8426)</td>
+                        <td>7.8</td>
+                        <td>{{processusX_ram_usage_bytes_placeholder}}</td>
+                    </tr>
+                    <tr>
+                        <td>code (PID 8394)</td>
+                        <td>3.9</td>
+                        <td>2.95</td>
+                    </tr>
+                </table>
             </div>
         </section>
         <section id="files">
             <h2>Fichier</h2> <!--TODO check if id is useful-->
-            <div>/home/nelson/Documents</div>
+            <div>Dossier analysé : /home/nelson/Documents
+            <table>
+                <tr>
+                    <th>type</th>
+                    <th>nombre</th>
+                    <th>%</th>
+                </tr>
+                <tr>
+                    <th>.txt</th>
+                    <td>1</td>
+                    <td>50.00</td>
+                </tr>
+                    <tr>
+                    <th>.py</th>
+                    <td>0</td>
+                    <td>0.00</td>
+                </tr>
+                    <tr>
+                    <th>.pdf</th>
+                    <td>1</td>
+                    <td>50.00</td>
+                </tr>
+                    <tr>
+                    <th>.jpg</th>
+                    <td>0</td>
+                    <td>0.00</td>
+                </tr>
+            </table>
+
+            </div>
         </section>
     </main>
-    
+
     <footer>
         <p>
-            <a href="/pdf" target="_blank">
-            <button>Télécharger le Dashboard en PDF</button>
+            <a href="/pdf" target="_blank"><!--TODO working link-->
+            <button id="button">Télécharger le Dashboard en PDF</button>
             </a>
         </p>
 
     </footer><!--TODO avec informations de génération--> 
+
+    <!--script-->
+    <script>
+const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+const yValues = [55, 49, 44, 24, 15];
+const barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145"
+];
+
+const ctx = document.getElementById('myChart');
+
+new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {display:true},
+      title: {
+        display: true,
+        text: "World Wine Production 2018",
+        font: {size:16}
+      }
+    }
+  }
+});
+</script>
+
 </body>
 </html>
