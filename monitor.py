@@ -112,6 +112,11 @@ def get_load_average() :
 # Création du dictionnaire de variables
 
 def set_variables():
+    """
+    Calls all the get_data functions, and returns
+    a dictionnary with all the useful data that'll be used
+    on the dashboard
+    """
     cpu = get_cpu_info()
     ram = get_memory_info()
     storage = get_storage_info()
@@ -153,7 +158,15 @@ def set_variables():
 
 # Génération Dashboard 
 
-def generate_dashboard(variables, template_path="template.html", output_path="index.html"):
+def generate_dashboard(variables, output_path, template_path="template.html"):
+    """
+    Replaces the placeholders in template.html 
+    
+    :param variables: Description
+    :param output_path: Description
+    :param template_path: Description
+    """
+
     with open(template_path, "r", encoding="utf-8") as f:
         html = f.read()
 
@@ -205,6 +218,7 @@ def generate_dashboard(variables, template_path="template.html", output_path="in
     html = html.replace("{{number_jpg_placholder}}", str(variables["file_counts"][".jpg"]))
     html = html.replace("{{percent_jpg_placholder}}", f"{variables['file_percentages']['.jpg']:.2f}")
 
+# Un index.html dans le repository de travail pour vérification
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
 
@@ -253,6 +267,8 @@ def print_variables(variables):
 if __name__ == "__main__" :
     variables = set_variables()
     print_variables(variables)
-    generate_dashboard(variables)
+    generate_dashboard(variables, output_path="index.html")
+    # une fois les droits d'écriture dans var/www/html accordés
+    # generate_dashboard(variables, output_path="/var/www/html/index.html")
 
     get_load_average()  
