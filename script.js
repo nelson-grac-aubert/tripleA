@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded',function() {
 
 //gauge ram
-// Options de la jauge
+// Options de la jauge //not used
 var options = {
     angle: 0.15,
     lineWidth: 0.44,
@@ -39,7 +39,7 @@ gauge.set(80);
 
 
 
-//gauge cpu
+//gauge cpu //not used 
 var opts = {
   angle: 0.35, // The span of the gauge arc
   lineWidth: 0.1, // The line thickness
@@ -68,7 +68,28 @@ gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
 gauge.animationSpeed = 32; // set animation speed (32 is default value)
 gauge.set(50); // set actual value
 
-//chart pie
+//barchart not used in script.js
+  const ctx = document.getElementById('bar_chart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
 
 
 
@@ -76,12 +97,7 @@ gauge.set(50); // set actual value
 
 
 //timestamp
-function updateTime() { //create fonction
-const now = new Date().toLocaleString("fr-FR"); //create date with local setting and put it in const 'now'
-document.getElementById("timestamp").textContent = "Mise à jour : " + now; // get element with id="timestamp" and put text inside
-}
-
-updateTime(); //update instant when page load, else it wait 1 sec
-
-setInterval(updateTime,1000); //update every 1000ms =1 sec
+ const now = new Date();
+  document.getElementById("timestamp").textContent =
+    "Current time: " + now.toLocaleString();
 });
