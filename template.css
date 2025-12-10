@@ -14,6 +14,11 @@ html,body{
     color: var(--text-color);
  
 }
+main{
+       display: flex;
+       justify-content: center;
+    
+}
 
 header,footer,section{
     background-color: var(--div-color);
@@ -22,7 +27,7 @@ header{
     width: 100%;
     height:50px;
     display: flex;
-    justify-content: space-between;
+    justify-content:center;
     align-items: center;
     
 }
@@ -33,6 +38,7 @@ h2{
     margin-bottom: 20px;
 }
 
+
 section{
     border-radius: 15px;
     margin: 20px;
@@ -40,7 +46,14 @@ section{
     border: 1px solid var(--bonus-color);
     display: flex;
     flex-direction: column;
+    width: 100%;
     height: fit-content;    
+    
+}
+.card{
+    background-color: var(--bonus-color);
+    padding: 10px;
+    border-radius: 5px;
 }
 
 main{ display: flex;
@@ -74,6 +87,17 @@ footer{
     padding: 0;
     width: 100%;
     height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 /*media query desktop TODO*/
 
+@media (min-width: 900px) {
+
+    main{
+        display: ;
+    }
+
+}
