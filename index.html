@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="widtd=device-widtd, initial-scale=1.0">
     <link href="template.css" rel="stylesheet" />
-    <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!--script gauge TODO remove-->
+    <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!--script gauge-->
     <script src="./script.js"></script> <!--script js perso -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!--need internet connexion to work-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script> <!--TODO remove on github-->
     <meta http-equiv="refresh" content="30">    <!--refresh every 30 sec-->
     <meta id="page-timestamp" name="timestamp" content=""> <!--meta tag for timestamp -->
     <title>TripleA</title>
@@ -14,121 +14,77 @@
 <body>
     <header>
         <h1>Dashboard</h1>
+        <p id="timestamp"></p><!--change to real timestamp-->
     </header>
     <main>
         <section id="system">
+            <p>date test : 2025-12-10 11:35:10</p> <!--TODO remove l8er-->
             <h2>Systeme</h2>
-            <div class="card">
-                <div>Nom de la machine : nelson-VMware-Virtual-Platform</div>
-                <div>Systeme d'exploitation : Linux 6.14.0-36-generic</div>
-                <div>Heure d'allumage : 2025-12-10 12:53:51</div>
-                <div>Uptime : 00:32:15</div>
-                <div>Nombre d'utilisateurs : 2</div>
-            </div>
+            <div>Nom de la machine : nelson-VMware-Virtual-Platform</div>
+            <div>systeme d'exploitation : Linux 6.14.0-36-generic</div>
+            <div>heure d'allumage : 2025-12-10 09:40:44</div>
+            <div>uptime : 01:54:25</div>
+            <div>nombre d'utilisateur : 2</div>
         </section>
         <section id="cpu">
             <h2>CPU</h2>
-            <div class="card">
-                <div>Nombre de coeurs : 2</div>
-                <div>Fréquence : 2611.20 MHz</div>
-                <div>Utilisation : 63.3 %</div>
-                <canvas id="gauge_percent" widtd="auto" height="100"></canvas>
-            </div>
+            <div>Nombre de coeurs : 2</div>
+            <div>fréquence : 2611.20 MHz</div>
+            <div>pourcentage d'utilisation : 49.0 %</div>
+            <canvas id="gauge_percent" widtd="auto" height="100"></canvas>
         </section>
         <section id="memory">
             <h2>Mémoire</h2>
-            <div class="card">    
-                <div>RAM totale : 3.78GB</div>
-                <div>RAM utilisée (GB) : 2.49GB</div>
-                <div>RAM utilisée (%) : 74.7 % </div>
-                <!--<canvas id="gauge_ram" widtd="auto" height="100"></canvas>--><!--TODO DELETE canvas for gauge linked to script by id-->
-                <canvas id="myChart" style="width:200px;max-width:200px"></canvas> 
-            </div>
-            <div class="card">    
-                <div>Mémoire totale : 14.66 GB</div>
-                <div>Mémoire utilisée (GB) : 9.66 GB</div>
-                <div>Mémoire utilisée (%) : 69.5 %</div>
-            </div>
+            <div>RAM total :3.78GB</div>
+            <div>RAM utilisée : 1.97GB</div>
+            <div>Pourcentage : 60.2 %
+            <canvas id="gauge_ram" widtd="auto" height="100"></canvas><!--canvas for gauge linked to script by id-->
+            <canvas id="myChart" style="width:100%;max-width:200px"></canvas> <!--TODO remove on github-->
+        </div>
         </section>
         <section id="network">
             <h2>Réseau</h2>
-            <div class="card">Adresse principale : 192.168.8.139</div>
+            <div>adresse principale : 192.168.8.139</div>
         </section>
         <section id="process">
             <h2>Processus</h2>
+            <h3>Liste des processus</h3>
+            <div id="process_list">
+                  {% for process in {{most_demanding_processus_placeholder}} %}
+                 <p>{{process}}</p>
+                    {% endfor %}
+            </div>
 
             <div id="process_table_top3">
                 <h3>Processus les plus gourmands</h3>
-                <div class="card">
-                   <li>RAM
-                    <ol>code     (PID 3762): 14.40%</ol>
-                    <ol>code     (PID 3277): 10.42%</ol>
-                    <ol>firefox     (PID 4042): 9.54%</ol>
-                   </li>
-
-                       <li>CPU
-                    <ol>gnome-shell     (PID 2412): 41.00%</ol>
-                    <ol>firefox     (PID 4042): 29.60%</ol>
-                    <ol>file:// Content     (PID 4190): 22.40%</ol>
-                   </li>
-            
-                     <canvas id="bar_chart"></canvas>
-                     <script>
-                    const ctx = document.getElementById('bar_chart');
-
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                        datasets: [{
-                            label: '# of Votes',
-                            data: [12, 19, 3, 5, 2, 3],
-                            borderWidth: 1
-                        }]
-                        },
-                        options: {
-                        scales: {
-                            y: {
-                            beginAtZero: true
-                            }
-                        }
-                        }
-                    });
-                    </script>
-
-                   <!-- <tr>
+                <table>
+                    <tr>
                         <th>Processus</th>
                         <th>CPU %</th>
                         <th>RAM %</th>
                     </tr>
                     <tr>
-                        <td>{{most_demanding_processus_1_placeholder}}</td>
-                        <td>{{processus1_cpu_usage_percent_placeholder}}</td>
-                        <td>{{processus1_ram_usage_bytes_placeholder}}</td>
+                        <td>gnome-shell (PID 2428)</td>
+                        <td>8.8</td>
+                        <td>3.98</td>
                     </tr>
                     <tr>
-                        <td>{{most_demanding_processus_2_placeholder}}</td>
-                        <td>{{processus2_cpu_usage_percent_placeholder}}</td>
-                        <td>{{processus2_ram_usage_bytes_placeholder}}</td>
+                        <td>code (PID 8426)</td>
+                        <td>7.8</td>
+                        <td>{{processusX_ram_usage_bytes_placeholder}}</td>
                     </tr>
                     <tr>
-                        <td>{{most_demanding_processus_3_placeholder}}</td>
-                        <td>{{processus3_cpu_usage_percent_placeholder}}</td>
-                        <td>{{processus3_ram_usage_bytes_placeholder}}</td>
-                    </tr>-->
-                </div>
-                <h3>Liste des processus</h3>
-                <div id="process_list">
-                    {% for process in {{most_demanding_processus_placeholder}} %}
-                    <p>{{process}}</p>
-                        {% endfor %}
-                </div>
+                        <td>code (PID 8394)</td>
+                        <td>3.9</td>
+                        <td>2.95</td>
+                    </tr>
+                </table>
             </div>
         </section>
         <section id="files">
             <h2>Fichier</h2> <!--TODO check if id is useful-->
             <div>Dossier analysé : /home/nelson/Documents
-            <table class="card">
+            <table>
                 <tr>
                     <th>type</th>
                     <th>nombre</th>
@@ -137,22 +93,22 @@
                 <tr>
                     <th>.txt</th>
                     <td>1</td>
-                    <td>20.00</td>
+                    <td>50.00</td>
                 </tr>
                     <tr>
                     <th>.py</th>
-                    <td>2</td>
-                    <td>40.00</td>
+                    <td>0</td>
+                    <td>0.00</td>
                 </tr>
                     <tr>
                     <th>.pdf</th>
                     <td>1</td>
-                    <td>20.00</td>
+                    <td>50.00</td>
                 </tr>
                     <tr>
                     <th>.jpg</th>
-                    <td>1</td>
-                    <td>20.00</td>
+                    <td>0</td>
+                    <td>0.00</td>
                 </tr>
             </table>
 
@@ -161,57 +117,49 @@
     </main>
 
     <footer>
-         <p>
+        <p>
             <a href="/pdf" target="_blank"><!--TODO working link-->
             <button id="button">Télécharger le Dashboard en PDF</button>
             </a>
         </p>
-       
-        <p id="timestamp"></p>
-        <script>   //timestamp
-            const now = new Date();
-            document.getElementById("timestamp").textContent =
-            "Dernière Mise a jour : " + now.toLocaleString();
-        </script>
-        
 
     </footer><!--TODO avec informations de génération--> 
 
-        <script>
-        const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-        const yValues = [55, 49, 44, 24, 15];  
-        const barColors = [
-        "#b91d47",
-        "#00aba9",
-        "#2b5797",
-        "#e8c3b9",
-        "#1e7145"
-        ];
+    <!--script-->
+    <script>
+const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+const yValues = [55, 49, 44, 24, 15];
+const barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145"
+];
 
-        const ctx = document.getElementById('myChart');
+const ctx = document.getElementById('myChart');
 
-        new Chart(ctx, {
-        type: "pie",
-        data: {
-            labels: xValues,
-            datasets: [{
-            backgroundColor: barColors,
-            data: yValues
-            }]
-        },
-        options: {
-            plugins: {
-            legend: {display:true},
-            title: {
-                display: true,
-                text: "A COMPLETER",
-                font: {size:16}
-            }
-            }
-        }
-        });
-        </script>
-    
+new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {display:true},
+      title: {
+        display: true,
+        text: "World Wine Production 2018",
+        font: {size:16}
+      }
+    }
+  }
+});
+</script>
 
 </body>
 </html>
