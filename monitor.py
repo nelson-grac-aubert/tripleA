@@ -196,7 +196,7 @@ def generate_dashboard(variables, template_path="template.html", output_path="in
 
     html = html.replace("{{total_ram_bytes_placeholder}}", str(variables["total_ram_bytes"]))
     html = html.replace("{{total_ram_gb_placeholder}}", f"{variables['total_ram_gb']:.2f}")
-    html = html.replace("{{used_ram_bytes_placeholder}}", str(variables["used_ram_bytes"]))
+    html = html.replace("{{used_ram_gb_placeholder}}", f"{variables["used_ram_gb"]:.2f}")
     html = html.replace("{{used_ram_percent_placeholder}}", f"{variables['used_ram_percent']} %")
 
     html = html.replace("{{ip_address_placeholder}}", variables["ip_address"])
