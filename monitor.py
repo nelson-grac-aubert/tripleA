@@ -104,6 +104,9 @@ def get_file_analysis(path):
 
 def get_load_average() : 
     load1, load5, load15 = os.getloadavg()
+    load1 = load1 / psutil.cpu_count(logical=True) * 100 
+    load5 = load5 / psutil.cpu_count(logical=True) * 100 
+    load15 = load15 / psutil.cpu_count(logical=True) * 100 
     return load1, load5, load15
 
 # Création du dictionnaire de variables
@@ -115,6 +118,7 @@ def set_variables():
     sysinfo = get_system_info()
     proc = get_process_info()
     files = get_file_analysis("/home/" + getpass.getuser() + "/Documents")
+    loads = get_load_average()
 
     return {
         "date_test": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -141,7 +145,10 @@ def set_variables():
         "file_counts": files["counts"],
         "file_total": files["total"],
         "file_percentages": files["percentages"],
-        "analysed_directory": files["directory"]
+        "analysed_directory": files["directory"],
+        "load1" : loads[0],
+        "load5" : loads[1],
+        "load15" : loads[2]
     }
 
 # Génération Dashboard 
@@ -150,40 +157,45 @@ def generate_dashboard(variables, template_path="template.html", output_path="in
     with open(template_path, "r", encoding="utf-8") as f:
         html = f.read()
 
-# Remplacements simples
+# Remplacements système
     html = html.replace("{{date_test}}", variables["date_test"])
     html = html.replace("{{machine_name_placeholder}}", variables["machine_name"])
     html = html.replace("{{operating_system_placeholder}}", variables["os_version"])
     html = html.replace("{{start_time_placeholder}}", variables["start_time"])
     html = html.replace("{{up_time_placeholder}}", variables["up_time"])
     html = html.replace("{{user_count_placeholder}}", str(variables["user_count"]))
+    html = html.replace("{{ip_address_placeholder}}", variables["ip_address"])
+# Remplacements CPU
     html = html.replace("{{cpu_heart_count_placeholder}}", str(variables["cpu_hearts"]))
     html = html.replace("{{cpu_frequency_placeholder}}", f"{variables['cpu_frequency']:.2f}")
     html = html.replace("{{cpu_usage_percent_placeholder}}", f"{variables['cpu_usage_percent']}")
+    html = html.replace("{{load_1_placeholder}}", f"{variables["load1"]} %")
+    html = html.replace("{{load_5_placeholder}}", f"{variables["load5"]} %")
+    html = html.replace("{{load_15_placeholder}}", f"{variables["load15"]} %")
+# Remplacements Mémoire
     html = html.replace("{{total_ram_gb_placeholder}}", f" {variables['total_ram_gb']:.2f} ")
     html = html.replace("{{used_ram_gb_placeholder}}", f"{variables['used_ram_gb']:.2f} ")
     html = html.replace("{{used_ram_percent_placeholder}}", f"{variables['used_ram_percent']}")
-    html = html.replace("{{ip_address_placeholder}}", variables["ip_address"])
-    html = html.replace("{{analysed_directory_placeholder}}", variables["analysed_directory"])
     html = html.replace("{{total_storage_gb}}", f"{variables['total_storage_gb']:.2f} GB")
     html = html.replace("{{used_storage_gb}}", f"{variables['used_storage_gb']:.2f} GB")
     html = html.replace("{{used_storage_percent}}", f"{variables['used_storage_percent']} %")
 
-# Top 3
+# Remplacements Top 3
     html = html.replace("{{processus1_ram_usage_placeholder}}",
-    f"{variables['top3_ram'][0]['name']} (PID {variables['top3_ram'][0]['pid']}) - RAM {variables['top3_ram'][0]['memory_percent']:.2f} %")
+    f"{variables['top3_ram'][0]['name']} - PID {variables['top3_ram'][0]['pid']} - {variables['top3_ram'][0]['memory_percent']:.2f} %")
     html = html.replace("{{processus2_ram_usage_placeholder}}",
-    f"{variables['top3_ram'][1]['name']} (PID {variables['top3_ram'][1]['pid']}) - RAM {variables['top3_ram'][1]['memory_percent']:.2f} %")
+    f"{variables['top3_ram'][1]['name']} - PID {variables['top3_ram'][1]['pid']} - {variables['top3_ram'][1]['memory_percent']:.2f} %")
     html = html.replace("{{processus3_ram_usage_placeholder}}",
-    f"{variables['top3_ram'][2]['name']} (PID {variables['top3_ram'][2]['pid']}) - RAM {variables['top3_ram'][2]['memory_percent']:.2f} %")
+    f"{variables['top3_ram'][2]['name']} - PID {variables['top3_ram'][2]['pid']} - {variables['top3_ram'][2]['memory_percent']:.2f} %")
     html = html.replace("{{processus1_cpu_usage_placeholder}}",
-    f"{variables['top3_cpu'][0]['name']} (PID {variables['top3_cpu'][0]['pid']}) - CPU {variables['top3_cpu'][0]['cpu_percent']:.2f} %")
+    f"{variables['top3_cpu'][0]['name']} - PID {variables['top3_cpu'][0]['pid']} - {variables['top3_cpu'][0]['cpu_percent']:.2f} %")
     html = html.replace("{{processus2_cpu_usage_placeholder}}",
-f"{variables['top3_cpu'][1]['name']} (PID {variables['top3_cpu'][1]['pid']}) - CPU {variables['top3_cpu'][1]['cpu_percent']:.2f} %")
+    f"{variables['top3_cpu'][1]['name']} - PID {variables['top3_cpu'][1]['pid']} - {variables['top3_cpu'][1]['cpu_percent']:.2f} %")
     html = html.replace("{{processus3_cpu_usage_placeholder}}",
-    f"{variables['top3_cpu'][2]['name']} (PID {variables['top3_cpu'][2]['pid']}) - CPU {variables['top3_cpu'][2]['cpu_percent']:.2f} %")
+    f"{variables['top3_cpu'][2]['name']} - PID {variables['top3_cpu'][2]['pid']} - {variables['top3_cpu'][2]['cpu_percent']:.2f} %")
 
-# Fichiers
+# Remplacements Fichiers
+    html = html.replace("{{analysed_directory_placeholder}}", variables["analysed_directory"])
     html = html.replace("{{number_txt_placholder}}", str(variables["file_counts"][".txt"]))
     html = html.replace("{{percent_txt_placholder}}", f"{variables['file_percentages']['.txt']:.2f}")
     html = html.replace("{{number_py_placholder}}", str(variables["file_counts"][".py"]))
@@ -201,6 +213,9 @@ def print_variables(variables):
     print(f"Cœurs : {variables['cpu_hearts']}")
     print(f"Fréquence : {variables['cpu_frequency']:.2f} MHz")
     print(f"Utilisation : {variables['cpu_usage_percent']}")
+    print(f"Charge système sur la derniere minute : {variables['load1']} %")
+    print(f"Charge système sur les 5 dernières minute : {variables['load5']} %")
+    print(f"Charge système sur les 15 dernières minute : {variables['load15']} %")
 
     print("\nRAM")
     print(f"Totale : {variables['total_ram_gb']:.2f} GB ({variables['total_ram_bytes']} bytes)")
@@ -239,3 +254,5 @@ if __name__ == "__main__" :
     variables = set_variables()
     print_variables(variables)
     generate_dashboard(variables)
+
+    get_load_average()  
