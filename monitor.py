@@ -102,6 +102,10 @@ def get_file_analysis(path):
         "directory": path
     }
 
+def get_load_average() : 
+    load1, load5, load15 = os.getloadavg()
+    return load1, load5, load15
+
 # Création du dictionnaire de variables
 
 def set_variables():
