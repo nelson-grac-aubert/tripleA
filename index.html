@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="widtd=device-widtd, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="template.css" rel="stylesheet" />
     <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!--script gauge-->
-    <script src="./script.js"></script> <!--script config gauge-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script> <!--TODO remove on github-->
+    <script src="script.js"></script> <!--script config gauge-->
     <meta http-equiv="refresh" content="30">    <!--refresh every 30 sec-->
     <meta id="page-timestamp" name="timestamp" content=""> <!--meta tag for timestamp -->
     <title>TripleA</title>
@@ -14,112 +13,70 @@
 <body>
     <header>
         <h1>Dashboard</h1>
-        <p id="timestamp"></p><!--change to real timestamp-->
+        <p id="timestamp"></p>
+  </script>
     </header>
     <main>
         <section id="system">
-            <p>date test : December 09, 2025</p> <!--TODO remove l8er-->
             <h2>Systeme</h2>
-            <div>Nom de la machine : {{machine_name_placeholder}}</div>
-            <div>systeme d'exploitation : {{operating_system_placeholder}}</div>
-            <div>heure d'allumage : {{start_time_placeholder}}</div>
-            <div>uptime : {{up_time_placeholder}}</div>
-            <div>nombre d'utilisateur : {{user_count_placeholder}}</div>
+            <div>Nom de la machine : nelson-VMware-Virtual-Platform</div>
+            <div>systeme d'exploitation : Linux 6.14.0-36-generic</div>
+            <div>heure d'allumage : 2025-12-10 08:44:19</div>
+            <div>uptime : 00:25:52</div>
+            <div>nombre d'utilisateur : 2</div>
         </section>
         <section id="cpu">
             <h2>CPU</h2>
-            <div>Nombre de coeurs : {{cpu_heart_count_placeholder}}</div>
-            <div>fréquence : {{cpu_frequency_placeholder}} MHz</div>
-            <div>pourcentage d'utilisation : {{cpu_usage_percent_placeholder}} %</div>
-            <canvas id="gauge_percent" widtd="auto" height="100"></canvas>
+            <div>Nombre de coeurs : 2</div>
+            <div>fréquence : 2611.20 MHz</div>
+            <div>pourcentage d'utilisation : 33.5 %</div>
+         <canvas id="gauge_percent" width="auto" height="100"></canvas>
         </section>
         <section id="memory">
             <h2>Mémoire</h2>
-            <div>RAM total : {{total_ram_bytes_placeholder}}bytes et {{total_ram_gb_placeholder}}GB</div>
-            <div>RAM utilisée : {{used_ram_bytes_placeholder}}GB</div>
-            <div>Pourcentage : {{used_ram_percent_placeholder}} %
-            <canvas id="gauge_ram" widtd="auto" height="100"></canvas><!--canvas for gauge linked to script by id-->
-            <canvas id="myChart" style="width:100%;max-width:700px"></canvas> <!--TODO remove on github-->
-        </div>
+            <div>RAM total : 3.78GB</div>
+            <div>RAM utilisée : 2.41GB</div>
+            <div>Pourcentage : 71.1 %
+            <canvas id="gauge_ram" width="auto" height="100"></canvas><!--canvas for gauge linked to script by id-->
+                </div>
         </section>
         <section id="network">
             <h2>Réseau</h2>
-            <div>adresse principale : {{ip_address_placeholder}}</div>
+            <div>adresse principale : 192.168.8.139</div>
         </section>
         <section id="process">
             <h2>Processus</h2>
-            <h3>Liste des processus</h3>
-            <div id="process_list">
-                  {% for process in {{most_demanding_processus_placeholder}} %}
-                 <p>{{process}}</p>
-                    {% endfor %}
+            <div><li id="process_top3">Processus les plus gourmands
+                <ol>code (PID 8426) - CPU 7.8 %</ol>
+                <ol>gnome-shell (PID 2428) - CPU 5.8 %</ol>
+                <ol>code (PID 10255) - CPU 3.9 %</ol>
+            </li>
             </div>
-
-            <div id="process_table_top3">
-                <h3>Processus les plus gourmands</h3>
-                <table>
-                    <tr>
-                        <th>Processus</th>
-                        <th>CPU %</th>
-                        <th>RAM %</th>
-                    </tr>
-                    <tr>
-                        <td>{{most_demanding_processus_1_placeholder}}</td>
-                        <td>{{processus1_cpu_usage_percent_placeholder}}</td>
-                        <td>{{processus1_ram_usage_bytes_placeholder}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{most_demanding_processus_2_placeholder}}</td>
-                        <td>{{processus2_cpu_usage_percent_placeholder}}</td>
-                        <td>{{processusX_ram_usage_bytes_placeholder}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{most_demanding_processus_3_placeholder}}</td>
-                        <td>{{processus3_cpu_usage_percent_placeholder}}</td>
-                        <td>{{processus3_ram_usage_bytes_placeholder}}</td>
-                    </tr>
-                </table>
+            <div><li id="process_cpu">Processus en cours CPU
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                <ul> {{running_processus_cpu_usage_placeholder}}</ul>
+                </li>
+            </div>
+            <div><li id="process_ram">Processus en cours RAM
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                <ul> {{running_processus_ram_usage_placeholder}}</ul>
+                </li>
             </div>
         </section>
         <section id="files">
             <h2>Fichier</h2> <!--TODO check if id is useful-->
-            <div>Dossier analysé : {{analysed_directory_placeholder}}
-            <table>
-                <tr>
-                    <th>type</th>
-                    <th>nombre</th>
-                    <th>%</th>
-                </tr>
-                <tr>
-                    <th>.txt</th>
-                    <td>{{number_txt_placholder}}</td>
-                    <td>{{percent_txt_placholder}}</td>
-                </tr>
-                    <tr>
-                    <th>.py</th>
-                    <td>{{number_py_placholder}}</td>
-                    <td>{{percent_py_placholder}}</td>
-                </tr>
-                    <tr>
-                    <th>.pdf</th>
-                    <td>{{number_pdf_placholder}}</td>
-                    <td>{{percent_pdf_placholder}}</td>
-                </tr>
-                    <tr>
-                    <th>.jpg</th>
-                    <td>{{number_jpg_placholder}}</td>
-                    <td>{{percent_jpg_placholder}}</td>
-                </tr>
-            </table>
-
-            </div>
+            <div>/home/nelson/Documents</div>
         </section>
     </main>
-
+    
     <footer>
         <p>
-            <a href="/pdf" target="_blank"><!--TODO working link-->
-            <button id="button">Télécharger le Dashboard en PDF</button>
+            <a href="/pdf" target="_blank">
+            <button>Télécharger le Dashboard en PDF</button>
             </a>
         </p>
 
