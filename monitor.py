@@ -160,11 +160,14 @@ def generate_dashboard(variables, template_path="template.html", output_path="in
     html = html.replace("{{cpu_heart_count_placeholder}}", str(variables["cpu_hearts"]))
     html = html.replace("{{cpu_frequency_placeholder}}", f"{variables['cpu_frequency']:.2f}")
     html = html.replace("{{cpu_usage_percent_placeholder}}", f"{variables['cpu_usage_percent']}")
-    html = html.replace("{{total_ram_gb_placeholder}}", f"{variables['total_ram_gb']:.2f}")
-    html = html.replace("{{used_ram_gb_placeholder}}", f"{variables['used_ram_gb']:.2f}")
+    html = html.replace("{{total_ram_gb_placeholder}}", f" {variables['total_ram_gb']:.2f} ")
+    html = html.replace("{{used_ram_gb_placeholder}}", f"{variables['used_ram_gb']:.2f} ")
     html = html.replace("{{used_ram_percent_placeholder}}", f"{variables['used_ram_percent']}")
     html = html.replace("{{ip_address_placeholder}}", variables["ip_address"])
     html = html.replace("{{analysed_directory_placeholder}}", variables["analysed_directory"])
+    html = html.replace("{{total_storage_gb}}", f"{variables['total_storage_gb']:.2f} GB")
+    html = html.replace("{{used_storage_gb}}", f"{variables['used_storage_gb']:.2f} GB")
+    html = html.replace("{{used_storage_percent}}", f"{variables['used_storage_percent']} %")
 
 # Top 3 CPU
     for i in range(3):
