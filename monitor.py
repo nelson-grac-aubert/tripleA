@@ -8,7 +8,7 @@ from datetime import datetime
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
-# Fonctions de collecte
+# --- Fonctions de collecte ---
 
 def get_cpu_info():
     return {
@@ -84,33 +84,7 @@ def get_process_info():
         "top3_ram": top3_ram
     }
 
-def get_file_analysis(path):
-    extensions = ['.txt', '.py', '.pdf', '.jpg']
-    counts = {ext: 0 for ext in extensions}
-
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            for ext in extensions:
-                if file.endswith(ext):
-                    counts[ext] += 1
-
-    total_files = sum(counts.values())
-    percentages = {ext: (count / total_files * 100) if total_files > 0 else 0 for ext, count in counts.items()}
-
-    return {
-        "counts": counts,
-        "total": total_files,
-        "percentages": percentages,
-        "directory": path
-    }
-
-def get_load_average() : 
-    load1, load5, load15 = os.getloadavg()
-    load1 = load1 / psutil.cpu_count(logical=True) * 100 
-    load5 = load5 / psutil.cpu_count(logical=True) * 100 
-    load15 = load15 / psutil.cpu_count(logical=True) * 100 
-    return load1, load5, load15
-
+# --- Analyse de fichiers approfondie ---
 def analyze_files(root_dir, extensions):
     file_info = defaultdict(lambda: {"count": 0, "size": 0})
     largest_files = []
@@ -127,7 +101,7 @@ def analyze_files(root_dir, extensions):
                 file_info[ext]["count"] += 1
                 file_info[ext]["size"] += size
 
-                # Maintenir une liste des 10 fichiers les plus volumineux
+                # Top 10 fichiers les plus volumineux
                 if len(largest_files) < 10:
                     largest_files.append((filepath, size))
                     largest_files.sort(key=lambda x: x[1], reverse=True)
@@ -136,16 +110,30 @@ def analyze_files(root_dir, extensions):
                         largest_files[-1] = (filepath, size)
                         largest_files.sort(key=lambda x: x[1], reverse=True)
 
-    return file_info, largest_files
-# Création du dictionnaire de variables
+    total_files = sum(info["count"] for info in file_info.values())
+    percentages = {ext: (info["count"] / total_files * 100) if total_files > 0 else 0
+                   for ext, info in file_info.items()}
 
+    return file_info, largest_files, percentages, root_dir
+
+def get_load_average():
+    load1, load5, load15 = os.getloadavg()
+    load1 = load1 / psutil.cpu_count(logical=True) * 100
+    load5 = load5 / psutil.cpu_count(logical=True) * 100
+    load15 = load15 / psutil.cpu_count(logical=True) * 100
+    return load1, load5, load15
+
+# --- Création du dictionnaire de variables ---
 def set_variables():
     cpu = get_cpu_info()
     ram = get_memory_info()
     storage = get_storage_info()
     sysinfo = get_system_info()
     proc = get_process_info()
-    files = get_file_analysis("/home/" + getpass.getuser() + "/Documents")
+
+    # Extensions suivies (10+)
+    extensions = ['.txt', '.py', '.pdf', '.jpg', '.png', '.docx', '.xlsx', '.csv', '.log', '.json', '.html', '.mp3', '.mp4']
+    files_info, largest_files, percentages, analysed_dir = analyze_files("/home/" + getpass.getuser() + "/Documents", extensions)
     loads = get_load_average()
 
     return {
@@ -170,63 +158,22 @@ def set_variables():
         "processes": proc["processes"],
         "top3_cpu": proc["top3_cpu"],
         "top3_ram": proc["top3_ram"],
-        "file_counts": files["counts"],
-        "file_total": files["total"],
-        "file_percentages": files["percentages"],
-        "analysed_directory": files["directory"],
+        "file_info": files_info,
+        "file_percentages": percentages,
+        "largest_files": largest_files[:5],
+        "analysed_directory": analysed_dir,
         "load1": loads[0],
         "load5": loads[1],
         "load15": loads[2]
     }
 
-##Generation Dashboard avec Jinja2
-
+# --- Génération Dashboard ---
 def generate_dashboard(variables, output_path, template_path="template.html"):
     env = Environment(loader=FileSystemLoader('.'))
     template = env.get_template(template_path)
-    html = template.render(**variables)  # injection directe des variables
+    html = template.render(**variables)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
-
-def print_variables(variables):
-    print("CPU")
-    print(f"Cœurs : {variables['cpu_hearts']}")
-    print(f"Fréquence : {variables['cpu_frequency']:.2f} MHz")
-    print(f"Utilisation : {variables['cpu_usage_percent']}")
-    print(f"Charge système sur la derniere minute : {variables['load1']} %")
-    print(f"Charge système sur les 5 dernières minute : {variables['load5']} %")
-    print(f"Charge système sur les 15 dernières minute : {variables['load15']} %")
-
-    print("\nRAM")
-    print(f"Totale : {variables['total_ram_gb']:.2f} GB ({variables['total_ram_bytes']} bytes)")
-    print(f"Utilisée : {variables['used_ram_gb']:.2f} GB ({variables['used_ram_bytes']} bytes)")
-    print(f"Pourcentage : {variables['used_ram_percent']}")
-
-    print("\nStockage")
-    print(f"Totale : {variables['total_storage_gb']:.2f} GB")
-    print(f"Utilisée : {variables['used_storage_gb']:.2f} GB")
-    print(f"Pourcentage : {variables['used_storage_percent']}")
-
-    print("\nSystème")
-    print(f"Nom d’hôte : {variables['machine_name']}")
-    print(f"OS : {variables['os_version']}")
-    print(f"Démarrage : {variables['start_time']}")
-    print(f"Uptime : {variables['up_time']}")
-    print(f"Utilisateurs connectés : {variables['user_count']}")
-    print(f"Adresse IP : {variables['ip_address']}")
-
-    print("\nTop 3 CPU")
-    for i, p in enumerate(variables['top3_cpu'], start=1):
-        print(f"{i}. {p['name']} (PID {p['pid']}) - CPU {p['cpu_percent']} %")
-
-    print("\nTop 3 RAM")
-    for i, p in enumerate(variables['top3_ram'], start=1):
-        print(f"{i}. {p['name']} (PID {p['pid']}) - RAM {p['memory_percent']:.2f} %")
-
-    print("\nAnalyse fichiers")
-    print(f"Dossier analysé : {variables['analysed_directory']}")
-    for ext, count in variables['file_counts'].items():
-        print(f"{ext} : {count} fichiers ({variables['file_percentages'][ext]:.2f} %)")
 
 if __name__ == "__main__":
     while True:
@@ -235,12 +182,3 @@ if __name__ == "__main__":
         generate_dashboard(variables, output_path="/var/www/html/index.html")
         print("Dashboard mis à jour :", variables["date_test"])
         time.sleep(30)
-
-while __name__ == "__main__" :
-    variables = set_variables()
-    print_variables(variables)
-    generate_dashboard(variables, output_path="index.html")
-    # une fois les droits d'écriture dans var/www/html accordés
-    # generate_dashboard(variables, output_path="/var/www/html/index.html")
-
-    time.sleep(30)
