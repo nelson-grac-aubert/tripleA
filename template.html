@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="template.css" rel="stylesheet" />
-    <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!-- script gauge TODO remove -->
-    <script src="./script.js"></script> <!-- script js perso -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- besoin d'internet -->
-    <meta http-equiv="refresh" content="30"> <!-- refresh every 30 sec -->
-    <meta id="page-timestamp" name="timestamp" content="">
+    <script src="./script.js"></script> <!--script js perso -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!--script chart-->
+    <meta http-equiv="refresh" content="30">    <!--refresh every 30 sec-->
+    <meta id="page-timestamp" name="timestamp" content=""> <!--meta tag for timestamp -->
     <title>TripleA</title>
 </head>
 <body>
@@ -136,21 +135,12 @@
             <canvas id="pie_chart" style="width:100%;max-width:200px"></canvas>
         </section>
     </main>
-
-
     <footer>
         <p id="timestamp"></p>
         <p>Version 1.0</p>
-        <script>
-            const now = new Date();
-            document.getElementById("timestamp").textContent =
-                "Dernière mise à jour : " + now.toLocaleString();
-        </script>
     </footer>
-
-
-    <!-- Pie chart (Chart.js) -->
-    <script>
+        <!--script chart-->
+        <script>
         const xValues = [".txt", ".py", ".pdf", ".jpg"];
         const yValues = [
             {{ file_percentages['.txt'] | round(1) }},

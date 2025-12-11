@@ -236,3 +236,11 @@ if __name__ == "__main__":
         print("Dashboard mis à jour :", variables["date_test"])
         time.sleep(30)
 
+while __name__ == "__main__" :
+    variables = set_variables()
+    print_variables(variables)
+    generate_dashboard(variables, output_path="index.html")
+    # une fois les droits d'écriture dans var/www/html accordés
+    # generate_dashboard(variables, output_path="/var/www/html/index.html")
+
+    time.sleep(30)

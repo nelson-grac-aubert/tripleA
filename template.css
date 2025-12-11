@@ -42,6 +42,9 @@ h2{
     margin-bottom: 20px;
 }
 
+li{
+    list-style-type: none;
+}
 section{
     border-radius: 15px;
     margin: 20px;
@@ -50,8 +53,8 @@ section{
     display: flex;
     flex-direction: column;
     width: 80%;
-    
-}
+    box-shadow: rgba(240, 46, 170, 0.1) -5px 5px, rgba(240, 46, 170, 0.05) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+    }
 .card{
     background-color: var(--bonus-color);
     padding: 20px;
@@ -64,23 +67,19 @@ main{ display: flex;
     flex-wrap: wrap;
 }
 
+
+
 /*
 #sytem,#network,#process,#files{  
 }
 */
 
 
-th{
-    border: 1px solid var(--text-color)
-}
-
-#button{
-    color: var(--text-color);
-    background-color: var(--bonus-color);
-    border: 1px solid var;
-    border-radius: 5%;
+th,tr,td{
+    border: 1px solid var(--text-color);
     padding: 5px;
 }
+
 footer{
     margin: 0;
     padding: 0;
@@ -91,18 +90,22 @@ footer{
     justify-content: space-between;
     align-items: center;
 }
-/*media query desktop TODO*/
 
+/*media query desktop*/
 @media (min-width: 900px) {
 
     main{
         padding: 50px 0;
     }
-
     section{
-        max-width: 40%;
+        max-width: 37%;
     }
     #process,#files{
-        width: 90%;
-}
+        max-width:100%;
+    }
+#process_table_top3>div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    }
 }
