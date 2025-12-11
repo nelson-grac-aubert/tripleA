@@ -81,6 +81,7 @@ sudo chmod -R 775 /var/www/html
 ```
 
 ### 7. Sécurisation de la VM 
+Pour fermer tous les ports sauf le 443 https
 ```
 sudo ufw status
 sudo ufw enable
@@ -89,6 +90,11 @@ sudo ufw default deny incoming
 sudo ufw allow 443
 sudo ufw reload
 sudo ufw status numbered
+```
+Pour rétablir les paramètres par défaut : 
+```
+sudo ufw reset
+sudo ufw reload
 ```
 
 ## Utilisation
