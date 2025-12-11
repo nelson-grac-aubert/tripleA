@@ -8,9 +8,10 @@ from datetime import datetime
 from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader
 
-# --- Fonctions de collecte ---
+# System data collection functions 
 
 def get_cpu_info():
+    """Returns CPU core count, frequency, and usage percent."""
     return {
         "cores": psutil.cpu_count(logical=True),
         "frequency_mhz": psutil.cpu_freq().current,
@@ -18,6 +19,7 @@ def get_cpu_info():
     }
 
 def get_memory_info():
+    """Returns RAM total (bytes, GB) and RAM usage (bytes, GB, percent)."""
     ram = psutil.virtual_memory()
     return {
         "used_gb": ram.used / (1024**3),
@@ -28,6 +30,7 @@ def get_memory_info():
     }
 
 def get_storage_info():
+    """Returns main disk storage (total GB, used GB, and usage percent)."""
     mem = psutil.disk_usage(path="/")
     return {
         "used_gb": mem.used / (1024**3),
@@ -36,12 +39,13 @@ def get_storage_info():
     }
 
 def get_system_info():
+    """Returns system data: OS, hostname, IP address, 
+    boot time, uptime, and active user count."""
     uname = platform.uname()
     boot_time = datetime.fromtimestamp(psutil.boot_time())
     uptime_seconds = time.time() - psutil.boot_time()
     uptime = time.strftime("%H:%M:%S", time.gmtime(uptime_seconds))
 
-    ip_address = "N/A"
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
@@ -60,6 +64,7 @@ def get_system_info():
     }
 
 def get_process_info():
+    """Returns all processes and the top 3 most resource-consuming in CPU and RAM."""
     processes = []
     for proc in psutil.process_iter(['pid', 'name']):
         try:
@@ -67,7 +72,7 @@ def get_process_info():
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             continue
 
-    time.sleep(1)
+    time.sleep(1)  # Allows CPU usage measurement
 
     for proc in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent']):
         try:
@@ -84,8 +89,10 @@ def get_process_info():
         "top3_ram": top3_ram
     }
 
-# --- Analyse de fichiers approfondie ---
+# File analysis in a given directory
+
 def analyze_files(root_dir, extensions):
+    """Analyzes files by extension and returns stats + top 10 largest files."""
     file_info = defaultdict(lambda: {"count": 0, "size": 0})
     largest_files = []
 
@@ -101,14 +108,12 @@ def analyze_files(root_dir, extensions):
                 file_info[ext]["count"] += 1
                 file_info[ext]["size"] += size
 
-                # Top 10 fichiers les plus volumineux
                 if len(largest_files) < 10:
                     largest_files.append((filepath, size))
                     largest_files.sort(key=lambda x: x[1], reverse=True)
-                else:
-                    if size > largest_files[-1][1]:
-                        largest_files[-1] = (filepath, size)
-                        largest_files.sort(key=lambda x: x[1], reverse=True)
+                elif size > largest_files[-1][1]:
+                    largest_files[-1] = (filepath, size)
+                    largest_files.sort(key=lambda x: x[1], reverse=True)
 
     total_files = sum(info["count"] for info in file_info.values())
     percentages = {ext: (info["count"] / total_files * 100) if total_files > 0 else 0
@@ -117,23 +122,28 @@ def analyze_files(root_dir, extensions):
     return file_info, largest_files, percentages, root_dir
 
 def get_load_average():
+    """Returns system load average over 1, 5, and 15 minutes in percent."""
     load1, load5, load15 = os.getloadavg()
-    load1 = load1 / psutil.cpu_count(logical=True) * 100
-    load5 = load5 / psutil.cpu_count(logical=True) * 100
-    load15 = load15 / psutil.cpu_count(logical=True) * 100
-    return load1, load5, load15
+    cpu_count = psutil.cpu_count(logical=True)
+    return (
+        load1 / cpu_count * 100,
+        load5 / cpu_count * 100,
+        load15 / cpu_count * 100
+    )
 
-# --- Création du dictionnaire de variables ---
+# Data aggregation for the dashboard
+
 def set_variables():
+    """Collects all system and file metrics for the dashboard."""
     cpu = get_cpu_info()
     ram = get_memory_info()
     storage = get_storage_info()
     sysinfo = get_system_info()
     proc = get_process_info()
 
-    # Extensions suivies (10+)
     extensions = ['.txt', '.py', '.pdf', '.jpg', '.png', '.docx', '.xlsx', '.csv', '.log', '.json', '.html', '.mp3', '.mp4']
-    files_info, largest_files, percentages, analysed_dir = analyze_files("/home/" + getpass.getuser() + "/Documents", extensions)
+    user_dir = os.path.join("/home", getpass.getuser(), "Documents")
+    files_info, largest_files, percentages, analysed_dir = analyze_files(user_dir, extensions)
     loads = get_load_average()
 
     return {
@@ -167,18 +177,22 @@ def set_variables():
         "load15": loads[2]
     }
 
-# --- Génération Dashboard ---
+# HTML dashboard generation
+
 def generate_dashboard(variables, output_path, template_path="template.html"):
+    """Generates the HTML dashboard from the template and variables."""
     env = Environment(loader=FileSystemLoader('.'))
     template = env.get_template(template_path)
     html = template.render(**variables)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
 
+# Main update loop
+
 if __name__ == "__main__":
     while True:
         variables = set_variables()
         generate_dashboard(variables, output_path="index.html")
         generate_dashboard(variables, output_path="/var/www/html/index.html")
-        print("Dashboard mis à jour :", variables["date_test"])
+        print("Dashboard updated:", variables["date_test"])
         time.sleep(30)
