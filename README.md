@@ -5,13 +5,13 @@ Le Challenge Triple A est un projet de monitoring léger et autonome permettant 
 Il combine trois compétences vues ce semestre :
 - Administration : gestion et configuration d’une VM Ubuntu.
 - Algorithmique : collecte et traitement des données système avec Python.
-- Affichage : création d’une interface web en HTML/CSS.
+- Affichage : création d’une interface web en HTML/CSS/JS.
 
 ## Prérequis
 - Une machine virtuelle Ubuntu Desktop 22.04 LTS (ou version plus récente).
 - 2 GB de RAM minimum.
 - 15 GB de stockage.
-- Un accès à Internet (carte reseau NAT recommendée)
+- Un accès à Internet (carte reseau NAT recommandée)
 - Un utilisateur administrateur avec droits sudo.
 - Python 3 installé avec pip, venv et les librairies citées plus bas
 - Apache2 installé
