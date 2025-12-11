@@ -12,17 +12,16 @@
     <header>
         <h1>Dashboard</h1>
     </header>
-
     <main>
         <!-- Système -->
         <section id="system">
             <h2>Système</h2>
             <div class="card">
-                <div><strong>Nom de la machine :</strong> {{ machine_name }}</div>
-                <div><strong>Système d'exploitation :</strong> {{ os_version }}</div>
-                <div><strong>Heure d'allumage :</strong> {{ start_time }}</div>
-                <div><strong>Uptime :</strong> {{ up_time }}</div>
-                <div><strong>Nombre d'utilisateurs :</strong> {{ user_count }}</div>
+                <p><strong>Nom de la machine :</strong> {{ machine_name }}</p>
+                <p><strong>Système d'exploitation :</strong> {{ os_version }}</p>
+                <p><strong>Heure d'allumage :</strong> {{ start_time }}</p>
+                <p><strong>Uptime :</strong> {{ up_time }}</p>
+                <p><strong>Nombre d'utilisateurs :</strong> {{ user_count }}</p>
             </div>
         </section>
 
@@ -30,7 +29,7 @@
         <section id="network">
             <h2>Réseau</h2>
             <div class="card">
-                <div><strong>Adresse principale :</strong> {{ ip_address }}</div>
+                <p><strong>Adresse principale :</strong> {{ ip_address }}</p>
             </div>
         </section>
 
@@ -38,15 +37,22 @@
         <section id="cpu">
             <h2>CPU</h2>
             <div class="card">
-                <div><strong>Nombre de cœurs :</strong> {{ cpu_hearts }}</div>
-                <div><strong>Fréquence :</strong> {{ cpu_frequency }} MHz</div>
-                <div><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</div>
+                <p><strong>Nombre de cœurs :</strong> {{ cpu_hearts }}</p>
+                <p><strong>Fréquence :</strong> {{ cpu_frequency }} MHz</p>
+                <p><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
             </div>
             <div class="card">
                 <h3>Charge système moyenne</h3>
-                <div><strong>Dernière minute :</strong> {{ load1 | round(2) }} %</div>
-                <div><strong>Dernières 5 minutes :</strong> {{ load5 | round(2) }} %</div>
-                <div><strong>Dernières 15 minutes :</strong> {{ load15 | round(2) }} %</div>
+                {% if load1 | round(2) >=80 %}
+                    <p class="red"><strong>Dernière minute :</strong> {{ load1 | round(2) }} %</p>
+                {% elif load1 | round(2) >=50 %}
+                    <p class="orange"><strong>Dernière minute :</strong> {{ load1 | round(2) }} %</p>
+                {% else %}
+                    <p class="green"><strong>Dernière minute :</strong> {{ load1 | round(2) }} %</p>
+                {% endif %}
+
+                <p><strong>Dernières 5 minutes :</strong> {{ load5 | round(2) }} %</p>
+                <p><strong>Dernières 15 minutes :</strong> {{ load15 | round(2) }} %</p>
             </div>
         </section>
 
@@ -54,14 +60,14 @@
         <section id="memory">
             <h2>Mémoire & Stockage</h2>
             <div class="card">
-                <div><strong>RAM totale :</strong> {{ total_ram_gb | round(2) }} GB</div>
-                <div><strong>RAM utilisée :</strong> {{ used_ram_gb | round(2) }} GB</div>
-                <div><strong>Utilisation RAM :</strong> {{ used_ram_percent | round(1) }} %</div>
+                <p><strong>RAM totale :</strong> {{ total_ram_gb | round(2) }} GB</p>
+                <p><strong>RAM utilisée :</strong> {{ used_ram_gb | round(2) }} GB</p>
+                <p><strong>Utilisation RAM :</strong> {{ used_ram_percent | round(1) }} %</p>
             </div>
             <div class="card">
-                <div><strong>Stockage total :</strong> {{ total_storage_gb | round(2) }} GB</div>
-                <div><strong>Stockage utilisé :</strong> {{ used_storage_gb | round(2) }} GB</div>
-                <div><strong>Utilisation stockage :</strong> {{ used_storage_percent | round(1) }} %</div>
+                <p><strong>Stockage total :</strong> {{ total_storage_gb | round(2) }} GB</p>
+                <p><strong>Stockage utilisé :</strong> {{ used_storage_gb | round(2) }} GB</p>
+                <p><strong>Utilisation stockage :</strong> {{ used_storage_percent | round(1) }} %</p>
             </div>
         </section>
 

@@ -66,7 +66,13 @@ main{ display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
-
+.green{
+    color: green;
+}
+.orange{
+    color orange;
+}
+.red{color: red;}
 
 
 /*
