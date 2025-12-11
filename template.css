@@ -53,7 +53,6 @@ section{
     display: flex;
     flex-direction: column;
     width: 80%;
-    box-shadow: rgba(240, 46, 170, 0.1) -5px 5px, rgba(240, 46, 170, 0.05) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
     }
 .card{
     background-color: var(--bonus-color);
