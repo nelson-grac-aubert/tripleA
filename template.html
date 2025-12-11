@@ -117,7 +117,7 @@
 
             <div class="card">
                 <h3>Répartition par extension</h3>
-                <table>
+                <table class>
                     <thead>
                         <tr>
                             <th>Extension</th>
@@ -150,7 +150,7 @@
 
             <div class="card">
                 <h3>Graphique des pourcentages par extension</h3>
-                <canvas id="pie_chart" style="width:200px;height:200px"></canvas>
+                <canvas id="pie_chart"></canvas>
             </div>
         </section>
     </main>
@@ -181,6 +181,7 @@
                 }]
             },
             options: {
+                responsive : false,
                 plugins: {
                     legend: { display: true, position: 'right' },
                     
