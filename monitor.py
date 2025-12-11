@@ -164,7 +164,8 @@ def set_variables():
         "analysed_directory": analysed_dir,
         "load1": loads[0],
         "load5": loads[1],
-        "load15": loads[2]
+        "load15": loads[2],
+        "load_tot":loads
     }
 
 # --- Génération Dashboard ---

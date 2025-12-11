@@ -39,20 +39,40 @@
             <div class="card">
                 <p><strong>Nombre de cœurs :</strong> {{ cpu_hearts }}</p>
                 <p><strong>Fréquence :</strong> {{ cpu_frequency }} MHz</p>
-                <p><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
+                {% if cpu_usage_percent >=81 %}
+                    <p><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
+                {% elif cpu_usage_percent is gt(50) and cpu_usage_percent is lt(80) %}
+                    <p><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
+                {% else %}
+                    <p><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
+                {% endif %}
             </div>
             <div class="card">
-                <h3>Charge système moyenne</h3>
-                {% if load1 | round(2) >=80 %}
+                <h3>Charge système moyenne</h3> 
+                {% for x in range(2) %} <!--fdelete this one for merge-->
+                {% if load_tot[x] >=81 %}
                     <p class="red"><strong>Dernière minute :</strong> {{ load1 | round(2) }} %</p>
-                {% elif load1 | round(2) >=50 %}
+                {% elif load_tot[x] is gt(50) and load_tot[x] is lt(50) %}
                     <p class="orange"><strong>Dernière minute :</strong> {{ load1 | round(2) }} %</p>
                 {% else %}
                     <p class="green"><strong>Dernière minute :</strong> {{ load1 | round(2) }} %</p>
                 {% endif %}
-
-                <p><strong>Dernières 5 minutes :</strong> {{ load5 | round(2) }} %</p>
-                <p><strong>Dernières 15 minutes :</strong> {{ load15 | round(2) }} %</p>
+                             
+                {% if load5 >=81 %}
+                    <p class="red"><strong>Dernière minute :</strong> {{ load5 | round(2) }} %</p>
+                {% elif load1 is gt(50) and load5 is lt(50) %}
+                    <p class="orange"><strong>Dernière minute :</strong> {{ load5 | round(2) }} %</p>
+                {% else %}
+                    <p class="green"><strong>Dernière minute :</strong> {{ load5 | round(2) }} %</p>
+                {% endif %}
+                
+                {% if load15 >=81 %}
+                    <p class="red"><strong>Dernière minute :</strong> {{ load15 | round(2) }} %</p>
+                {% elif load15 is gt(50) and load15 is lt(50) %}
+                    <p class="orange"><strong>Dernière minute :</strong> {{ load15 | round(2) }} %</p>
+                {% else %}
+                    <p class="green"><strong>Dernière minute :</strong> {{ load15 | round(2) }} %</p>
+                {% endif %}
             </div>
         </section>
 
@@ -62,12 +82,24 @@
             <div class="card">
                 <p><strong>RAM totale :</strong> {{ total_ram_gb | round(2) }} GB</p>
                 <p><strong>RAM utilisée :</strong> {{ used_ram_gb | round(2) }} GB</p>
-                <p><strong>Utilisation RAM :</strong> {{ used_ram_percent | round(1) }} %</p>
+                {% if used_ram_percent >=81 %}
+                    <p class="red"><strong>Utilisation RAM  :</strong> {{ used_ram_percent | round(1) }} %</p>
+                {% elif used_ram_percent is gt(50) and load is lt(50) %}
+                    <p class="orange"><strong>Utilisation RAM  :</strong> {{ used_ram_percent | round(1) }} %</p>
+                {% else %}
+                    <p class="green"><strong>Utilisation RAM  :</strong> {{ used_ram_percent | round(1) }} %</p>
+                {% endif %}
             </div>
             <div class="card">
                 <p><strong>Stockage total :</strong> {{ total_storage_gb | round(2) }} GB</p>
                 <p><strong>Stockage utilisé :</strong> {{ used_storage_gb | round(2) }} GB</p>
-                <p><strong>Utilisation stockage :</strong> {{ used_storage_percent | round(1) }} %</p>
+                {% if used_storage_percent >=81 %}
+                    <p class="red"><strong>Utilisation stockage  :</strong> {{ used_storage_percent | round(1) }} %</p>
+                {% elif used_storage_percent is gt(50) and load is lt(50) %}
+                    <p class="orange"><strong>Utilisation stockage  :</strong> {{ used_storage_percent | round(1) }} %</p>
+                {% else %}
+                    <p class="green"><strong>Utilisation stockage :</strong> {{ used_storage_percent | round(1) }} %</p>
+                {% endif %}
             </div>
         </section>
 
@@ -133,7 +165,7 @@
 
             <div class="card">
                 <h3>Graphique des pourcentages par extension</h3>
-                <canvas id="pie_chart" style="width:100%;max-width:600px"></canvas>
+                <canvas id="pie_chart" style="width:200px;height:200px"></canvas>
             </div>
         </section>
     </main>
