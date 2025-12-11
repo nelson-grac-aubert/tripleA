@@ -61,7 +61,10 @@ section{
     margin: 20px;
     border-radius: 5px;
 }
-
+.siding{
+    display: flex;
+    flex-direction: column;
+}
 main{ display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -109,9 +112,12 @@ footer{
     #process,#files{
         max-width:100%;
     }
-#process_table_top3>div{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+        #process_table_top3>div{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    .siding{
+        flex-direction: row;
     }
 }

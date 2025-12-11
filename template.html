@@ -130,7 +130,7 @@
                 <p><strong>Dossier analysé :</strong> {{ analysed_directory }}</p>
             </div>
 
-            <div class="card">
+            <div class="card siding">
                 <h3>Répartition par extension</h3>
                 <table>
                     <thead>
@@ -152,6 +152,10 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                <div>
+                    <h3>Graphique des pourcentages par extension</h3>
+                     <canvas id="pie_chart" style="width:200px;height:200px"></canvas>
+                </div>
             </div>
 
             <div class="card">
@@ -161,11 +165,6 @@
                     <li>{{ filepath }} — {{ (size / (1024*1024)) | round(2) }} MB</li>
                     {% endfor %}
                 </ol>
-            </div>
-
-            <div class="card">
-                <h3>Graphique des pourcentages par extension</h3>
-                <canvas id="pie_chart" style="width:200px;height:200px"></canvas>
             </div>
         </section>
     </main>
