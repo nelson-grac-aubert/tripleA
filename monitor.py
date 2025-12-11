@@ -175,9 +175,13 @@ def set_variables():
         "load1": loads[0],
         "load5": loads[1],
         "load15": loads[2],
-        "load_tot":loads
+        "loads": [
+            {"label": "Dernière minute", "value": loads[0] },
+            {"label": "Dernière 5 minutes", "value": loads[1] },
+            {"label": "Dernière 15 minutes", "value": loads[2] },
+        ]
     }
-
+    
 # HTML dashboard generation
 
 def generate_dashboard(variables, output_path, template_path="template.html"):
