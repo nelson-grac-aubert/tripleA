@@ -80,6 +80,17 @@ sudo chown -R $NOMDUTILISATEUR:www-data /var/www/html
 sudo chmod -R 775 /var/www/html
 ```
 
+### 7. Sécurisation de la VM 
+```
+sudo ufw status
+sudo ufw enable
+sudo ufw default deny outgoing
+sudo ufw default deny incoming
+sudo ufw allow 443
+sudo ufw reload
+sudo ufw status numbered
+```
+
 ## Utilisation
 
 ```
@@ -139,18 +150,20 @@ Informations sur les processus :
 
 Analyse de fichiers :
 - Analyser un dossier au choix
-- Compter le nombre de fichiers pour ces 4 extensions précises : .txt, .py,
-.pdf, .jpg
+- Compter le nombre de fichiers pour plus de 10 extensions
 - Calculer le nombre total de fichiers pour chaque extension
 - Calculer le pourcentage que représente chaque type de fichier par
 rapport au total
 
 ## Captures d'écran
 cf. Dossier Screenshots
+
 ## Difficultés rencontrées
 
 ## Améliorations possibles
-- 
+- Python : récuperer plus de données système, comme le pourcentage d'utilisation de chaque coeur, le nombre de threads
+- HTML / CSS / JS : ajouter des graphiques pour suivre l'évolution des variables au cours de l'uptime de la machine
+- Rajouter un bouton "Print current state as PDF" dans le footer
 
 ## Auteur
 Maxime Fourquié, Marius Gavini, Nelson Grac-Aubert
