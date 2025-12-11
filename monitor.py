@@ -5,6 +5,8 @@ import socket
 import time
 import getpass
 from datetime import datetime
+from collections import defaultdict
+from jinja2 import Environment, FileSystemLoader
 
 # Fonctions de collecte
 
@@ -109,14 +111,35 @@ def get_load_average() :
     load15 = load15 / psutil.cpu_count(logical=True) * 100 
     return load1, load5, load15
 
+def analyze_files(root_dir, extensions):
+    file_info = defaultdict(lambda: {"count": 0, "size": 0})
+    largest_files = []
+
+    for dirpath, _, filenames in os.walk(root_dir):
+        for filename in filenames:
+            ext = os.path.splitext(filename)[1].lower()
+            if ext in extensions:
+                filepath = os.path.join(dirpath, filename)
+                try:
+                    size = os.path.getsize(filepath)
+                except OSError:
+                    size = 0
+                file_info[ext]["count"] += 1
+                file_info[ext]["size"] += size
+
+                # Maintenir une liste des 10 fichiers les plus volumineux
+                if len(largest_files) < 10:
+                    largest_files.append((filepath, size))
+                    largest_files.sort(key=lambda x: x[1], reverse=True)
+                else:
+                    if size > largest_files[-1][1]:
+                        largest_files[-1] = (filepath, size)
+                        largest_files.sort(key=lambda x: x[1], reverse=True)
+
+    return file_info, largest_files
 # Création du dictionnaire de variables
 
 def set_variables():
-    """
-    Calls all the get_data functions, and returns
-    a dictionnary with all the useful data that'll be used
-    on the dashboard
-    """
     cpu = get_cpu_info()
     ram = get_memory_info()
     storage = get_storage_info()
@@ -151,74 +174,17 @@ def set_variables():
         "file_total": files["total"],
         "file_percentages": files["percentages"],
         "analysed_directory": files["directory"],
-        "load1" : loads[0],
-        "load5" : loads[1],
-        "load15" : loads[2]
+        "load1": loads[0],
+        "load5": loads[1],
+        "load15": loads[2]
     }
 
-# Génération Dashboard 
+##Generation Dashboard avec Jinja2
 
 def generate_dashboard(variables, output_path, template_path="template.html"):
-    """
-    Replaces the placeholders in template.html 
-    
-    :param variables: Description
-    :param output_path: Description
-    :param template_path: Description
-    """
-
-    with open(template_path, "r", encoding="utf-8") as f:
-        html = f.read()
-
-# Remplacements système
-    html = html.replace("{{date_test}}", variables["date_test"])
-    html = html.replace("{{machine_name_placeholder}}", variables["machine_name"])
-    html = html.replace("{{operating_system_placeholder}}", variables["os_version"])
-    html = html.replace("{{start_time_placeholder}}", variables["start_time"])
-    html = html.replace("{{up_time_placeholder}}", variables["up_time"])
-    html = html.replace("{{user_count_placeholder}}", str(variables["user_count"]))
-    html = html.replace("{{ip_address_placeholder}}", variables["ip_address"])
-# Remplacements CPU
-    html = html.replace("{{cpu_heart_count_placeholder}}", str(variables["cpu_hearts"]))
-    html = html.replace("{{cpu_frequency_placeholder}}", f"{variables['cpu_frequency']:.2f}")
-    html = html.replace("{{cpu_usage_percent_placeholder}}", f"{variables['cpu_usage_percent']}")
-    html = html.replace("{{load_1_placeholder}}", f"{variables["load1"]} %")
-    html = html.replace("{{load_5_placeholder}}", f"{variables["load5"]} %")
-    html = html.replace("{{load_15_placeholder}}", f"{variables["load15"]} %")
-# Remplacements Mémoire
-    html = html.replace("{{total_ram_gb_placeholder}}", f" {variables['total_ram_gb']:.2f} ")
-    html = html.replace("{{used_ram_gb_placeholder}}", f"{variables['used_ram_gb']:.2f} ")
-    html = html.replace("{{used_ram_percent_placeholder}}", f"{variables['used_ram_percent']}")
-    html = html.replace("{{total_storage_gb}}", f"{variables['total_storage_gb']:.2f} GB")
-    html = html.replace("{{used_storage_gb}}", f"{variables['used_storage_gb']:.2f} GB")
-    html = html.replace("{{used_storage_percent}}", f"{variables['used_storage_percent']} %")
-
-# Remplacements Top 3
-    html = html.replace("{{processus1_ram_usage_placeholder}}",
-    f"{variables['top3_ram'][0]['name']} - PID {variables['top3_ram'][0]['pid']} - {variables['top3_ram'][0]['memory_percent']:.2f} %")
-    html = html.replace("{{processus2_ram_usage_placeholder}}",
-    f"{variables['top3_ram'][1]['name']} - PID {variables['top3_ram'][1]['pid']} - {variables['top3_ram'][1]['memory_percent']:.2f} %")
-    html = html.replace("{{processus3_ram_usage_placeholder}}",
-    f"{variables['top3_ram'][2]['name']} - PID {variables['top3_ram'][2]['pid']} - {variables['top3_ram'][2]['memory_percent']:.2f} %")
-    html = html.replace("{{processus1_cpu_usage_placeholder}}",
-    f"{variables['top3_cpu'][0]['name']} - PID {variables['top3_cpu'][0]['pid']} - {variables['top3_cpu'][0]['cpu_percent']:.2f} %")
-    html = html.replace("{{processus2_cpu_usage_placeholder}}",
-    f"{variables['top3_cpu'][1]['name']} - PID {variables['top3_cpu'][1]['pid']} - {variables['top3_cpu'][1]['cpu_percent']:.2f} %")
-    html = html.replace("{{processus3_cpu_usage_placeholder}}",
-    f"{variables['top3_cpu'][2]['name']} - PID {variables['top3_cpu'][2]['pid']} - {variables['top3_cpu'][2]['cpu_percent']:.2f} %")
-
-# Remplacements Fichiers
-    html = html.replace("{{analysed_directory_placeholder}}", variables["analysed_directory"])
-    html = html.replace("{{number_txt_placholder}}", str(variables["file_counts"][".txt"]))
-    html = html.replace("{{percent_txt_placholder}}", f"{variables['file_percentages']['.txt']:.2f}")
-    html = html.replace("{{number_py_placholder}}", str(variables["file_counts"][".py"]))
-    html = html.replace("{{percent_py_placholder}}", f"{variables['file_percentages']['.py']:.2f}")
-    html = html.replace("{{number_pdf_placholder}}", str(variables["file_counts"][".pdf"]))
-    html = html.replace("{{percent_pdf_placholder}}", f"{variables['file_percentages']['.pdf']:.2f}")
-    html = html.replace("{{number_jpg_placholder}}", str(variables["file_counts"][".jpg"]))
-    html = html.replace("{{percent_jpg_placholder}}", f"{variables['file_percentages']['.jpg']:.2f}")
-
-# Un index.html dans le repository de travail pour vérification
+    env = Environment(loader=FileSystemLoader('.'))
+    template = env.get_template(template_path)
+    html = template.render(**variables)  # injection directe des variables
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
 
@@ -262,13 +228,11 @@ def print_variables(variables):
     for ext, count in variables['file_counts'].items():
         print(f"{ext} : {count} fichiers ({variables['file_percentages'][ext]:.2f} %)")
 
-# Main
+if __name__ == "__main__":
+    while True:
+        variables = set_variables()
+        generate_dashboard(variables, output_path="index.html")
+        generate_dashboard(variables, output_path="/var/www/html/index.html")
+        print("Dashboard mis à jour :", variables["date_test"])
+        time.sleep(30)
 
-if __name__ == "__main__" :
-    variables = set_variables()
-    print_variables(variables)
-    generate_dashboard(variables, output_path="index.html")
-    # une fois les droits d'écriture dans var/www/html accordés
-    # generate_dashboard(variables, output_path="/var/www/html/index.html")
-
-    get_load_average()  

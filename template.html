@@ -1,220 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="widtd=device-widtd, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="template.css" rel="stylesheet" />
-    <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!--script gauge TODO remove-->
-    <script src="./script.js"></script> <!--script js perso -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!--need internet connexion to work-->
-    <meta http-equiv="refresh" content="30">    <!--refresh every 30 sec-->
-    <meta id="page-timestamp" name="timestamp" content=""> <!--meta tag for timestamp -->
+    <script src="https://bernii.github.io/gauge.js/dist/gauge.min.js"></script> <!-- script gauge TODO remove -->
+    <script src="./script.js"></script> <!-- script js perso -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- besoin d'internet -->
+    <meta http-equiv="refresh" content="30"> <!-- refresh every 30 sec -->
+    <meta id="page-timestamp" name="timestamp" content="">
     <title>TripleA</title>
 </head>
 <body>
     <header>
         <h1>Dashboard</h1>
     </header>
+
+
     <main>
+        <!-- Système -->
         <section id="system">
-            <h2>Systeme</h2>
+            <h2>Système</h2>
             <div class="card">
-                <div>Nom de la machine : {{machine_name_placeholder}}</div>
-                <div>systeme d'exploitation : {{operating_system_placeholder}}</div>
-                <div>heure d'allumage : {{start_time_placeholder}}</div>
-                <div>uptime : {{up_time_placeholder}}</div>
-                <div>nombre d'utilisateur : {{user_count_placeholder}}</div>
-            </div>
-        </section>
-                <section id="network">
-            <h2>Réseau</h2>
-            <div class="card">
-                <div>adresse principale : {{ip_address_placeholder}}</div>
-            </div>
-            </section>
-        <section id="cpu">
-            <h2>CPU</h2>
-            <div class="card">
-                <div>Nombre de coeurs : {{cpu_heart_count_placeholder}}</div>
-                <div>fréquence : {{cpu_frequency_placeholder}} MHz</div>
-                <div>pourcentage d'utilisation : {{cpu_usage_percent_placeholder}} %</div>
-               <!-- chart pie <canvas id="gauge_percent" widtd="auto" height="100"></canvas>--> 
-            </div>
-        </section>
-        <section id="memory">
-            <h2>Mémoire</h2>
-            <div class="card">    
-                <div>RAM total :{{total_ram_gb_placeholder}}GB</div>
-                <div>RAM utilisée : {{used_ram_gb_placeholder}}GB</div>
-                <div>Pourcentage : {{used_ram_percent_placeholder}} % </div>
-                <!--<canvas id="gauge_ram" widtd="auto" height="100"></canvas>--><!--TODO DELETE canvas for gauge linked to script by id-->
-                
-            </div>
-            <div class="card">    
-                <div>Mémoire totale : {{total_storage_gb}}</div>
-                <div>Mémoire utilisée (GB) : {{used_storage_gb}}</div>
-                <div>Mémoire utilisée (%) : {{used_storage_percent}}</div>
+                <div>Nom de la machine : {{ machine_name }}</div>
+                <div>Système d'exploitation : {{ os_version }}</div>
+                <div>Heure d'allumage : {{ start_time }}</div>
+                <div>Uptime : {{ up_time }}</div>
+                <div>Nombre d'utilisateurs : {{ user_count }}</div>
             </div>
         </section>
 
+
+        <!-- Réseau -->
+        <section id="network">
+            <h2>Réseau</h2>
+            <div class="card">
+                <div>Adresse principale : {{ ip_address }}</div>
+            </div>
+        </section>
+
+
+        <!-- CPU -->
+        <section id="cpu">
+            <h2>CPU</h2>
+            <div class="card">
+                <div>Nombre de cœurs : {{ cpu_hearts }}</div>
+                <div>Fréquence : {{ cpu_frequency }} MHz</div>
+                <div>Pourcentage d'utilisation : {{ cpu_usage_percent }} %</div>
+            </div>
+            <div class="card">
+                <h3>Charge système moyenne</h3><br>
+                <div>Dernière minute : {{ load1 | round(2) }} %</div>
+                <div>Dernières 5 minutes : {{ load5 | round(2) }} %</div>
+                <div>Dernières 15 minutes : {{ load15 | round(2) }} %</div>
+            </div>
+        </section>
+
+
+        <!-- Mémoire et stockage -->
+        <section id="memory">
+            <h2>Mémoire</h2>
+            <div class="card">
+                <div>RAM totale (GB) : {{ total_ram_gb | round(2) }}</div>
+                <div>RAM utilisée (GB) : {{ used_ram_gb | round(2) }}</div>
+                <div>Pourcentage (%) : {{ used_ram_percent | round(1) }}</div>
+            </div>
+            <div class="card">
+                <div>Stockage total (GB) : {{ total_storage_gb | round(2) }}</div>
+                <div>Stockage utilisé (GB) : {{ used_storage_gb | round(2) }}</div>
+                <div>Stockage utilisé (%) : {{ used_storage_percent | round(1) }}</div>
+            </div>
+        </section>
+
+
+        <!-- Processus -->
         <section id="process">
             <h2>Processus</h2>
+
 
             <div id="process_table_top3">
                 <h3>Processus les plus gourmands</h3>
                 <div class="card">
-                   <li>RAM
-                    <ol>{{processus1_ram_usage_placeholder}}</ol>
-                    <ol>{{processus2_ram_usage_placeholder}}</ol>
-                    <ol>{{processus3_ram_usage_placeholder}}</ol>
-                   </li>
-
-                       <li>CPU
-                    <ol>{{processus1_cpu_usage_placeholder}}</ol>
-                    <ol>{{processus2_cpu_usage_placeholder}}</ol>
-                    <ol>{{processus3_cpu_usage_placeholder}}</ol>
-                   </li>
-            <!-- bar chart
-                     <canvas id="bar_chart"></canvas>
-                     <script>
-                    const ctx = document.getElementById('bar_chart');
-
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                        datasets: [{
-                            label: '# of Votes',
-                            data: [12, 19, 3, 5, 2, 3],
-                            borderWidth: 1
-                        }]
-                        },
-                        options: {
-                        scales: {
-                            y: {
-                            beginAtZero: true
-                            }
-                        }
-                        }
-                    });
-                    </script>
-            -->
-                   <!-- <tr>
-                        <th>Processus</th>
-                        <th>CPU %</th>
-                        <th>RAM %</th>
-                    </tr>
-                    <tr>
-                        <td>{{most_demanding_processus_1_placeholder}}</td>
-                        <td>{{processus1_cpu_usage_percent_placeholder}}</td>
-                        <td>{{processus1_ram_usage_bytes_placeholder}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{most_demanding_processus_2_placeholder}}</td>
-                        <td>{{processus2_cpu_usage_percent_placeholder}}</td>
-                        <td>{{processus2_ram_usage_bytes_placeholder}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{most_demanding_processus_3_placeholder}}</td>
-                        <td>{{processus3_cpu_usage_percent_placeholder}}</td>
-                        <td>{{processus3_ram_usage_bytes_placeholder}}</td>
-                    </tr>-->
+                    <ul>
+                        <li><strong>RAM</strong></li>
+                        <ol>
+                            {% for p in top3_ram %}
+                            <li>{{ p.name }} (PID {{ p.pid }}) — RAM {{ p.memory_percent | round(1) }} %</li>
+                            {% endfor %}
+                        </ol>
+                        <li><strong>CPU</strong></li>
+                        <ol>
+                            {% for p in top3_cpu %}
+                            <li>{{ p.name }} (PID {{ p.pid }}) — CPU {{ p.cpu_percent | round(1) }} %</li>
+                            {% endfor %}
+                        </ol>
+                    </ul>
                 </div>
             </div>
         </section>
+
+
+        <!-- Fichiers -->
         <section id="files">
-            <h2>Fichier</h2> <!--TODO check if id is useful-->
+            <h2>Fichier</h2>
             <div>
-                <h3>Dossier analysé : {{analysed_directory_placeholder}}</h3>
+                <h3>Dossier analysé : {{ analysed_directory }}</h3>
                 <table class="card">
                     <tr>
-                        <th>type</th>
-                        <th>nombre</th>
-                        <th>%</th>
+                        <th>Type de fichier</th>
+                        <th>Nombre</th>
+                        <th>Pourcentage</th>
                     </tr>
                     <tr>
                         <th>.txt</th>
-                        <td>{{number_txt_placholder}}</td>
-                        <td>{{percent_txt_placholder}}</td>
+                        <td>{{ file_counts['.txt'] }}</td>
+                        <td>{{ file_percentages['.txt'] | round(1) }} %</td>
                     </tr>
-                        <tr>
+                    <tr>
                         <th>.py</th>
-                        <td>{{number_py_placholder}}</td>
-                        <td>{{percent_py_placholder}}</td>
+                        <td>{{ file_counts['.py'] }}</td>
+                        <td>{{ file_percentages['.py'] | round(1) }} %</td>
                     </tr>
-                        <tr>
+                    <tr>
                         <th>.pdf</th>
-                        <td>{{number_pdf_placholder}}</td>
-                        <td>{{percent_pdf_placholder}}</td>
+                        <td>{{ file_counts['.pdf'] }}</td>
+                        <td>{{ file_percentages['.pdf'] | round(1) }} %</td>
                     </tr>
-                        <tr>
+                    <tr>
                         <th>.jpg</th>
-                        <td>{{number_jpg_placholder}}</td>
-                        <td>{{percent_jpg_placholder}}</td>
+                        <td>{{ file_counts['.jpg'] }}</td>
+                        <td>{{ file_percentages['.jpg'] | round(1) }} %</td>
                     </tr>
                 </table>
             </div>
-            <canvas id="pie_chart" width="auto"></canvas>
+            <canvas id="pie_chart" style="width:100%;max-width:200px"></canvas>
         </section>
     </main>
 
+
     <footer>
-        <!--
-Source - https://stackoverflow.com/a
-Posted by Batfan, modified by community. See post 'Timeline' for change history
-Retrieved 2025-12-10, License - CC BY-SA 4.0
--->
-      <!--   <p>
-            <a href="/pdf" target="_blank"> remove uselessk
-            <button id="button">Télécharger le Dashboard en PDF</button>
-        </a>
-        </p>
-    -->
         <p id="timestamp"></p>
         <p>Version 1.0</p>
-        <script>   //timestamp
+        <script>
             const now = new Date();
             document.getElementById("timestamp").textContent =
-            "Dernière Mise a jour : " + now.toLocaleString();
+                "Dernière mise à jour : " + now.toLocaleString();
         </script>
-        
+    </footer>
 
-    </footer><!--TODO avec informations de génération--> 
 
-        <script>
+    <!-- Pie chart (Chart.js) -->
+    <script>
         const xValues = [".txt", ".py", ".pdf", ".jpg"];
-        const yValues = [{{percent_txt_placholder}},{{percent_py_placholder}},{{percent_pdf_placholder}},{{percent_jpg_placholder}}];  
-        const barColors = [
-        "#E3E3E3",
-        "#456882",
-        "#234C6A",
-        "#1B3C53"
+        const yValues = [
+            {{ file_percentages['.txt'] | round(1) }},
+            {{ file_percentages['.py'] | round(1) }},
+            {{ file_percentages['.pdf'] | round(1) }},
+            {{ file_percentages['.jpg'] | round(1) }}
         ];
+        const barColors = ["#E3E3E3", "#456882", "#234C6A", "#1B3C53"];
+
 
         const ctx = document.getElementById('pie_chart');
 
-        new Chart(ctx, {
-        type: "pie",
-        data: {
-            labels: xValues,
-            datasets: [{
-            backgroundColor: barColors,
-            data: yValues
-            }]
-        },
-        options: {
-            plugins: {
-            legend: {display:true},
-            title: {
-                display: true,
-                text: "A COMPLETER",
-                font: {size:16}
-            }
-            }
-        }
-        });
-        </script>
-    
 
+        new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: true },
+                    title: {
+                        display: true,
+                        text: "Pourcentage des fichiers dans le dossier",
+                        font: { size: 16 }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
