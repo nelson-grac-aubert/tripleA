@@ -4,18 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="template.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/57d1da4875.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta http-equiv="refresh" content="30" />
     <title>TripleA</title>
 </head>
 <body>
     <header>
-        <h1>Dashboard</h1>
+        <h1>MARNEMAX SOLUTIONS</h1>
+        <h1><i class="fa-solid fa-gauge-high"></i>Dashboard</h1>
     </header>
     <main>
         <!-- Système -->
         <section id="system">
-            <h2>Système</h2>
+            <h2><i class="fa-solid fa-desktop"></i>Système</h2>
             <div class="card">
                 <p><strong>Nom de la machine :</strong> {{ machine_name }}</p>
                 <p><strong>Système d'exploitation :</strong> {{ os_version }}</p>
@@ -27,7 +29,7 @@
 
         <!-- Réseau -->
         <section id="network">
-            <h2>Réseau</h2>
+            <h2><i class="fa-solid fa-server"></i>Réseau</h2>
             <div class="card">
                 <p><strong>Adresse principale :</strong> {{ ip_address }}</p>
             </div>
@@ -35,7 +37,7 @@
 
         <!-- CPU -->
         <section id="cpu">
-            <h2>CPU</h2>
+            <h2><i class="fa-solid fa-microchip"></i>CPU</h2>
             <div class="card">
                 <p><strong>Nombre de cœurs :</strong> {{ cpu_hearts }}</p>
                 <p><strong>Fréquence :</strong> {{ cpu_frequency }} MHz</p>
@@ -63,7 +65,7 @@
 
         <!-- Mémoire & Stockage -->
         <section id="memory">
-            <h2>Mémoire & Stockage</h2>
+            <h2><i class="fa-solid fa-boxes-stacked"></i>Mémoire & Stockage</h2>
             <div class="card">
                 <p><strong>RAM totale :</strong> {{ total_ram_gb | round(2) }} GB</p>
                 <p><strong>RAM utilisée :</strong> {{ used_ram_gb | round(2) }} GB</p>
@@ -90,7 +92,7 @@
 
         <!-- Processus -->
         <section id="process">
-            <h2>Processus</h2>
+            <h2><i class="fa-solid fa-square-binary"></i>Processus</h2>
             <div class="card">
                 <h3>Top 3 par RAM</h3>
                 <ol>
@@ -109,7 +111,7 @@
 
         <!-- Fichiers -->
         <section id="files">
-            <h2>Analyse de fichiers approfondie</h2>
+            <h2><i class="fa-solid fa-file"></i>Analyse de fichiers approfondie</h2>
 
             <div class="card">
                 <p><strong>Dossier analysé :</strong> {{ analysed_directory }}</p>
