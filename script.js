@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded',function() { //check utility
+document.addEventListener('DOMContentLoaded',function() { 
 
 //timestamp
  const now = new Date();
