@@ -5,13 +5,13 @@ Le Challenge Triple A est un projet de monitoring léger et autonome permettant 
 Il combine trois compétences vues ce semestre :
 - Administration : gestion et configuration d’une VM Ubuntu.
 - Algorithmique : collecte et traitement des données système avec Python.
-- Affichage : création d’une interface web en HTML/CSS.
+- Affichage : création d’une interface web en HTML/CSS/JS.
 
 ## Prérequis
 - Une machine virtuelle Ubuntu Desktop 22.04 LTS (ou version plus récente).
 - 2 GB de RAM minimum.
 - 15 GB de stockage.
-- Un accès à Internet (carte reseau NAT recommendée)
+- Un accès à Internet (carte reseau NAT recommandée)
 - Un utilisateur administrateur avec droits sudo.
 - Python 3 installé avec pip, venv et les librairies citées plus bas
 - Apache2 installé
@@ -80,6 +80,23 @@ sudo chown -R $NOMDUTILISATEUR:www-data /var/www/html
 sudo chmod -R 775 /var/www/html
 ```
 
+### 7. Sécurisation de la VM 
+Pour fermer tous les ports sauf le 443 https
+```
+sudo ufw status
+sudo ufw enable
+sudo ufw default deny outgoing
+sudo ufw default deny incoming
+sudo ufw allow 443
+sudo ufw reload
+sudo ufw status numbered
+```
+Pour rétablir les paramètres par défaut : 
+```
+sudo ufw reset
+sudo ufw reload
+```
+
 ## Utilisation
 
 ```
@@ -139,18 +156,20 @@ Informations sur les processus :
 
 Analyse de fichiers :
 - Analyser un dossier au choix
-- Compter le nombre de fichiers pour ces 4 extensions précises : .txt, .py,
-.pdf, .jpg
+- Compter le nombre de fichiers pour plus de 10 extensions
 - Calculer le nombre total de fichiers pour chaque extension
 - Calculer le pourcentage que représente chaque type de fichier par
 rapport au total
 
 ## Captures d'écran
 cf. Dossier Screenshots
+
 ## Difficultés rencontrées
 
 ## Améliorations possibles
-- 
+- Python : récuperer plus de données système, comme le pourcentage d'utilisation de chaque coeur, le nombre de threads
+- HTML / CSS / JS : ajouter des graphiques pour suivre l'évolution des variables au cours de l'uptime de la machine
+- Rajouter un bouton "Print current state as PDF" dans le footer
 
 ## Auteur
 Maxime Fourquié, Marius Gavini, Nelson Grac-Aubert
