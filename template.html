@@ -40,11 +40,11 @@
                 <p><strong>Nombre de cœurs :</strong> {{ cpu_hearts }}</p>
                 <p><strong>Fréquence :</strong> {{ cpu_frequency }} MHz</p>
                 {% if cpu_usage_percent >=81 %}
-                    <p><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
+                    <p class="red"><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
                 {% elif cpu_usage_percent is gt(50) and cpu_usage_percent is lt(80) %}
-                    <p><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
+                    <p class="orange"><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
                 {% else %}
-                    <p><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
+                    <p class="green"><strong>Utilisation :</strong> {{ cpu_usage_percent }} %</p>
                 {% endif %}
             </div>
             <div class="card">
