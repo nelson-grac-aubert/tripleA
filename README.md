@@ -182,15 +182,16 @@ rapport au total
 cf. Dossier Screenshots
 
 ## Difficultés rencontrées
-- Quelles manières adoptés pour le remplacement des variables dans le fichier template.html (replace, Flask, Jinja2, Django)
-Conditions par couleur : finalement plus simple avec Jinja2 ce qui a motivé notre choix pour cette option.
+- Quelles manières adopter pour le remplacement des variables dans le fichier template.html (replace, Flask, Jinja2, Django)
+Condition par couleur : finalement plus simple avec Jinja2 ce qui a motivé notre choix pour cette option.
 - Après modification du .cdd et du .script dans le dossier source d'apache2, le dashboard ne s'actualisait pas en conséquence : cela est du au cache du navigateur, on doit donc le rafrachir avec ctrl+F5 pour vider le cache.
+- Découverte de JavaScript au cours de la semaine.
+- Python utilisation de convention claire pour l'écriture du script (lambda, variable non utilisé _ , __name__ = __main)
 ## Améliorations possibles
 - Python : récuperer plus de données système, comme le pourcentage d'utilisation de chaque coeur, le nombre de threads
 - HTML / CSS / JS : ajouter des graphiques pour suivre l'évolution des variables au cours de l'uptime de la machine
 - Rajouter un bouton "Print current state as PDF" dans le footer
 - Ajouter l'API de virus total pour vérifier les fichiers important et/ou douteux (seulement 4 fichiers par jour pour la version gratuite / test difficile)
-- 
 
 ## Auteur
 Maxime Fourquié, Marius Gavini, Nelson Grac-Aubert
