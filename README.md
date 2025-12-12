@@ -98,7 +98,10 @@ sudo ufw reload
 ```
 
 ## Utilisation
-
+S'assurer d'être dans le bon environnement virtuel 
+```
+source tripleA.venv/bin/activate
+```
 ```
 python3 monitor.py
 ```
