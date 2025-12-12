@@ -24,6 +24,7 @@ Il combine trois compétences vues ce semestre :
 - time et datetime : pour calculer l'uptime et afficher l'heure de démarrage
 - getpass : pour récupérer le nom de l'utilisateur courant.
 - defaultdict : pour gérer les clés par valeurs par défaut.
+- jinja2 Environment et FileSystemLoader : permet la gestion des variables du template et la création de index.html comme fichiers final d'affichage et sa mise à jour.
 
 ## Installation
 
