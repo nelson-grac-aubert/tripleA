@@ -124,8 +124,12 @@ get_process_info()
 - Retourne : dictionnaire avec top 3 des processus les plus gourmands en utilisation de CPU et top 3 des processus les plus gourmands en utilisation de RAM
 
 get_file_analysis(path)
-- But : Analyser un dossier dont le path est donné en argument et compter les fichiers selon certaines extensions.
+- But : Analyser un dossier dont le chemin est donné en argument et compter les fichiers selon certaines extensions.
 - Retourne : dictionnaire avec : nombre de fichiers par extension (.txt, .py, .pdf, .jpg), pourcentage de chaque type par rapport au total.
+
+analize_files(root_dir, extensions)
+- But : Analyser un dossier dont le chemin est donnée en argument et faire une liste des 10 fichiers les plus volumineux avec son extension et la taille du fichiers sous l'extension x.
+- Retourne : dictionnaire avec : les dix fichiers les plus volumineux (extension et taille) et le nombre de fichier par extension et la taille de l'extension.
 
 ## Fonctionnalités
 Informations sur le processeur :
@@ -165,11 +169,14 @@ rapport au total
 cf. Dossier Screenshots
 
 ## Difficultés rencontrées
-
+Quelles manières adoptés pour le remplacement des variables dans le fichier template.html (replace, Flask, Jinja2, Django)
+Conditions par couleur : finalement plus simple avec Jinja2 ce qui a motivé notre choix pour cette option.
 ## Améliorations possibles
 - Python : récuperer plus de données système, comme le pourcentage d'utilisation de chaque coeur, le nombre de threads
 - HTML / CSS / JS : ajouter des graphiques pour suivre l'évolution des variables au cours de l'uptime de la machine
 - Rajouter un bouton "Print current state as PDF" dans le footer
+- Ajouter l'API de virus total pour vérifier les fichiers important et/ou douteux (seulement 4 fichiers par jour pour la version gratuite / test difficile)
+- 
 
 ## Auteur
 Maxime Fourquié, Marius Gavini, Nelson Grac-Aubert
