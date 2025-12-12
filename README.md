@@ -13,8 +13,17 @@ Il combine trois compétences vues ce semestre :
 - 15 GB de stockage.
 - Un accès à Internet (carte reseau NAT recommandée)
 - Un utilisateur administrateur avec droits sudo.
-- Python 3 installé avec pip, venv et les librairies citées plus bas
+- Python 3 installé avec pip, venv et les bibliothèques citées plus bas
 - Apache2 installé
+
+## Bibliothèques python utilisés
+- psutil: bibliothèques principale pour récuperer les informations système (CPU, mémoire, processus, utilisateurs, uptime)
+- platform : fournit des informations générales sur le système (nom de la machine, OS, version)
+- socket : permet de récupérer l'adresse IP principale.
+- os : utilisé pour parcourir un dossier et analyser les fichiers
+- time et datetime : pour calculer l'uptime et afficher l'heure de démarrage
+- getpass : pour récupérer le nom de l'utilisateur courant.
+- defaultdict : pour gérer les clés par valeurs par défaut.
 
 ## Installation
 
@@ -131,7 +140,7 @@ get_file_analysis(path)
 - Retourne : dictionnaire avec : nombre de fichiers par extension (.txt, .py, .pdf, .jpg), pourcentage de chaque type par rapport au total.
 
 analize_files(root_dir, extensions)
-- But : Analyser un dossier dont le chemin est donnée en argument et faire une liste des 10 fichiers les plus volumineux avec son extension et la taille du fichiers sous l'extension x.
+- But : Parcourir récursivement tous les sous dossiers d'un répertoire choisi et faire la liste des 10 fichiers les plus volumineux.
 - Retourne : dictionnaire avec : les dix fichiers les plus volumineux (extension et taille) et le nombre de fichier par extension et la taille de l'extension.
 
 ## Fonctionnalités
