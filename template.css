@@ -93,6 +93,10 @@ section{
     display: flex;
     flex-direction: column;
 }
+.column{
+    display: flex;
+    flex-direction: column;
+}
 main{ display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -156,5 +160,6 @@ footer{
     }
     .siding{
         flex-direction: row;
+        justify-content: space-around;
     }
 }
