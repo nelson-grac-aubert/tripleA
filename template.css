@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap');
+@font-face {
+    font-family: "Disco";
+    src: url(70SdiscopersonaluseBold-w14z2.otf);
+}
+
 :root {
     --main-color :#121421;
     --div-color:#171c2a;
@@ -12,7 +18,7 @@
 html,body{
     background-color: var(--main-color);
     color: var(--text-color);
- 
+    font-family: "Stack Sans Text", sans-serif;
 }
 main{
        display: flex;
@@ -35,6 +41,7 @@ header{
 
 header>h1,p{
     margin: 0 20px;
+    font-family: "Disco", sans-serif ; 
 }
 section>h2{
     display: flex;
